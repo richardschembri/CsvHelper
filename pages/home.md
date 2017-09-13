@@ -1,6 +1,6 @@
 # CsvHelper
 
-A library for reading and writing CSV files. Extremely fast, flexible, and easy to use. Supports reading and writing of custom class objects.
+A library for reading and writing CSV files. Extremely fast, flexible, and easy to use. Supports reading and writing of custom class objects. CSV helper implements [RFC 4180](https://tools.ietf.org/html/rfc4180). By default, it's very conservative in its writing, but very liberal in its reading. There is a large set of configuration that can be done to change how reading and writing behaves, giving you the ability read/write non-standard files also.
 
 ## Installation
 
@@ -30,3 +30,5 @@ Want to contribute? Great! Here are a few guidelines.
 3. All code should have a unit test. If you make a feature, there should be significant tests around the feature. If you do a bug fix, there should be a test specific to that bug so it doesn't happen again.
 4. Pull requests should have a single commit. If you have multiple commits, squash them into a single commit before requesting a pull.
 5. Try and follow the code styling already in place.
+
+Looking for 2.x documentation? You can find it [here](/2.x).

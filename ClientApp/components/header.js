@@ -25,6 +25,7 @@ class Header extends Component {
 							<Link className="navbar-item" to="/reading">Reading</Link>
 							<Link className="navbar-item" to="/writing">Writing</Link>
 							<Link className="navbar-item" to="/configuration">Configuration</Link>
+							<Link className="navbar-item" to="/type-converters">Type Converters</Link>
 							<Link className="navbar-item" to="/change-log">Change Log</Link>
 						</div>
 					</div>

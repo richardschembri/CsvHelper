@@ -13,6 +13,10 @@ function wrapInColumns(text) {
 	return `<div class="columns"><div class="column">${text}</div></div>`;
 }
 
+function htmlEncode(text) {
+	return text.replace(/</g, "&lt;").replace(/>/g, "&gt");
+}
+
 highlight.configure({
 	languages: ["cs"]
 });
@@ -27,7 +31,7 @@ renderer.code = function (code, lang) {
 
 	return wrapInColumns(`<pre><code class="box ${lang}">${code}</code></pre>`);
 }
-renderer.heading = (text, level) => `<h${level} class="title is-${level}">${text}</h${level}>`;
+renderer.heading = (text, level) => `<h${level} class="title is-${level}">${htmlEncode(text)}</h${level}>`;
 renderer.list = (body, ordered) => {
 	return ordered
 		? `<div class="content"><ol>${body}</ol></div>` :

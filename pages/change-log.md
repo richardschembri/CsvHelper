@@ -5,9 +5,9 @@
 #### Features
 
 - netstandard2.0
-- Massive speed improvements to the parser.
+- Massive speed improvements to the `CsvParser`.
 - Speed improvements to `CsvSerializer`.
-- Map child properties so multiple mapping files aren't needed.
+- Map child properties so multiple mapping classes aren't needed.
 - `ConvertUsing` implementation for writing.
 - Read/write `IEnumerable` properties.
 - Field mapping.
