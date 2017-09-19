@@ -32,3 +32,5 @@ Want to contribute? Great! Here are a few guidelines.
 5. Try and follow the code styling already in place.
 
 Looking for 2.x documentation? You can find it [here](/2.x).
+
+<br/>

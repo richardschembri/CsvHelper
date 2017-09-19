@@ -13,34 +13,22 @@ var records = csv.GetRecords<MyClass>();
 
 The most common scenario is using one of the `GetRecords` methods.  You can specify the type of object you want returned, and it will return an `IEnumerable` that will `yield` results. This means when iterating the results, only a single record will be in memory at a time, instead of the entire file. Records aren't pulled until you actually start iterating the results.
 
-#### GetRecords<T>
+If you want to use an anonymous type as your record, you can get the records by supplying a type definition. You can use `default( type )` for value types, and `new` for reference types.
+
+#### GetRecords
 
 Returns an `IEnumerable<T>` of records.
 
 ```cs
 var records = csv.GetRecords<MyClass>();
-```
-
-#### GetRecords( Type type )
-
-Returns an `IEnumerable` of records.
-
-```cs
 var records = csv.GetRecords( typeof( MyClass ) );
-```
 
-#### GetRecords<T>( T anonymousTypeDefinition )
-
-If you want to use an anonymous type as your record, you can get the records by supplying a type definition. You can use `default( type )` for value types, and `new` for reference types.
-
-```cs
 var anonymousTypeDefinition =
 {
 	Id = default( int ),
 	Name = string.Empty,
 	MyClass = new MyClass()
 };
-
 var records = csv.GetRecords( anonymousTypeDefinition );
 ```
 
@@ -50,7 +38,7 @@ var records = csv.GetRecords( anonymousTypeDefinition );
 
 To be able to get individual records or even fields, you need to iterate through the records. This is done using the `Read` methods. `Read` will advance the reader to the next record. You must call `Read` before you can get any records or fields. When `GetRecords`, `Read` is automatically called for you.
 
-#### Read()
+#### Read
 
 This will advance the reader to the next record.
 
@@ -58,7 +46,7 @@ This will advance the reader to the next record.
 csv.Read();
 ```
 
-#### ReadAsync()
+#### ReadAsync
 
 This will advance the reader to the next record asynchronously. If the `TextReader` that was supplied is tied to a network or some other slow to read functionality, reading asynchronously is probably a good idea.
 
@@ -66,7 +54,7 @@ This will advance the reader to the next record asynchronously. If the `TextRead
 await csv.ReadAsync();
 ```
 
-#### ReadHeader()
+#### ReadHeader
 
 The header in a CSV file is just another record, but it has special meaning. If your file has a header record, you'll need to read the header after the first read. After that you can loop the records and read them. This will allow you to be able to read headers on different rows, or even multiple headers.
 
@@ -85,28 +73,18 @@ while( csv.Read() )
 
 Sometimes there is a reason that you may need to loop the records yourself. You can still easily get a single record, just like with multiple records.
 
-#### GetRecord<T>
+#### GetRecord
 
 ```cs
 var record = csv.GetRecord<MyClass>();
-```
-
-#### GetRecord( Type type )
-
-```cs
 var record = csv.GetRecord( typeof( MyClass ) );
-```
 
-#### GetRecord<T>( T anonymousTypeDefinition )
-
-```cs
 var anonymousTypeDefinition =
 {
 	Id = default( int ),
 	Name = string.Empty,
 	MyClass = new MyClass()
 };
-
 var record = csv.GetRecord( anonymousTypeDefinition );
 ```
 

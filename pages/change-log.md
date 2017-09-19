@@ -53,6 +53,8 @@
 - Reading anonymous types.
 - Auto mapping with any constructor.
 - Changed `Property` naming to `Member` since both properties and fields are used.
+- `TypeConverterFactory` is now instance of `Configuration` instead of a static.
+- Changed `Configuration` flags to callbacks with default functionality to let the user change the functionality if they want.
 
 #### Bug Fixes
 
@@ -106,6 +108,7 @@
 - Changed default delimiter to `,` instead of ListSeparator.
 - Added a `Flush` method to the writer.
 - Changed `Property` naming to `Member`.
+- Removed `Configuration`s `ThrowOnBadData`, `IgnoreReadingExceptions`, `SkipEmptyRecords`, and `WillThrowOnMissingField` in favor of function callbacks.
 
 ### 2.16.3
 
