@@ -32,7 +32,7 @@ var anonymousTypeDefinition =
 var records = csv.GetRecords( anonymousTypeDefinition );
 ```
 
-### Reading
+### Reading Records
 
 <hr/>
 

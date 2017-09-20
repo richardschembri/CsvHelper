@@ -87,7 +87,6 @@ class Layout extends Component {
 	}
 
 	scrollToHash = () => {
-		console.log("scroll to hash");
 		if (!this.props.location.hash) {
 			return;
 		}
@@ -100,7 +99,6 @@ class Layout extends Component {
 		}
 
 		element.scrollIntoView(true);
-		console.log("scrolled");
 	}
 
 	render() {

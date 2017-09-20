@@ -27,7 +27,7 @@ class Header extends Component {
 									<Link className="navbar-link" to="/reading">Reading</Link>
 									<div className="navbar-dropdown">
 										<Link className="navbar-item" to="/reading#getting-all-records">Getting All Records</Link>
-										<Link className="navbar-item" to="/reading#reading">Reading</Link>
+										<Link className="navbar-item" to="/reading#reading-records">Reading Records</Link>
 										<Link className="navbar-item" to="/reading#getting-a-single-record">Getting a Single Record</Link>
 										<Link className="navbar-item" to="/reading#getting-fields">Getting Fields</Link>
 										<Link className="navbar-item" to="/reading#reading-context">Reading Context</Link>
