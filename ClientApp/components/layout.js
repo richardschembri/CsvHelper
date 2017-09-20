@@ -17,6 +17,15 @@ function htmlEncode(text) {
 	return text.replace(/</g, "&lt;").replace(/>/g, "&gt");
 }
 
+function toSeoFriendly(text) {
+	var result = text
+		.toLowerCase()
+		.match(/[\w]+/g)
+		.map(word => encodeURIComponent(word))
+		.join("-");
+	return result;
+}
+
 highlight.configure({
 	languages: ["cs"]
 });
@@ -31,7 +40,7 @@ renderer.code = function (code, lang) {
 
 	return wrapInColumns(`<pre><code class="box ${lang}">${code}</code></pre>`);
 }
-renderer.heading = (text, level) => `<h${level} class="title is-${level}">${htmlEncode(text)}</h${level}>`;
+renderer.heading = (text, level) => `<h${level} id="${toSeoFriendly(text)}" class="title is-${level}">${htmlEncode(text)}</h${level}>`;
 renderer.list = (body, ordered) => {
 	return ordered
 		? `<div class="content"><ol>${body}</ol></div>` :
@@ -73,8 +82,25 @@ class Layout extends Component {
 				"Content-Type": "text/plain"
 			}
 		}).then(response => response.text()).then(content => {
-			this.setState({ content, page });
+			this.setState({ content, page }, this.scrollToHash);
 		});
+	}
+
+	scrollToHash = () => {
+		console.log("scroll to hash");
+		if (!this.props.location.hash) {
+			return;
+		}
+
+		const hash = this.props.location.hash.substr(1);
+		const element = document.getElementById(hash);
+
+		if (!element) {
+			return;
+		}
+
+		element.scrollIntoView(true);
+		console.log("scrolled");
 	}
 
 	render() {

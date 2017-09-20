@@ -23,11 +23,43 @@ class Header extends Component {
 
 						<div className="navbar-menu">
 							<div className="navbar-start">
-								<Link className="navbar-item" to="/reading">Reading</Link>
-								<Link className="navbar-item" to="/writing">Writing</Link>
-								<Link className="navbar-item" to="/configuration">Configuration</Link>
-								<Link className="navbar-item" to="/type-converters">Type Converters</Link>
-								<Link className="navbar-item" to="/change-log">Change Log</Link>
+								<div className="navbar-item has-dropdown is-hoverable">
+									<Link className="navbar-link" to="/reading">Reading</Link>
+									<div className="navbar-dropdown">
+										<Link className="navbar-item" to="/reading#getting-all-records">Getting All Records</Link>
+										<Link className="navbar-item" to="/reading#reading">Reading</Link>
+										<Link className="navbar-item" to="/reading#getting-a-single-record">Getting a Single Record</Link>
+										<Link className="navbar-item" to="/reading#getting-fields">Getting Fields</Link>
+										<Link className="navbar-item" to="/reading#reading-context">Reading Context</Link>
+										<Link className="navbar-item" to="/reading#configuration">Configuration</Link>
+									</div>
+								</div>
+								<div className="navbar-item has-dropdown is-hoverable">
+									<Link className="navbar-link" to="/writing">Writing</Link>
+									<div className="navbar-dropdown">
+										<Link className="navbar-item" to="/writing#writing-all-records">Writing All Records</Link>
+										<Link className="navbar-item" to="/writing#writing-a-single-record">Writing a Single Record</Link>
+										<Link className="navbar-item" to="/writing#writing-fields">Writing Fields</Link>
+										<Link className="navbar-item" to="/writing#ending-the-row">Ending the Row</Link>
+										<Link className="navbar-item" to="/writing#writing-context">Writing Context</Link>
+										<Link className="navbar-item" to="/writing#configuration">Configuration</Link>
+									</div>
+								</div>
+								<div className="navbar-item has-dropdown is-hoverable">
+									<Link className="navbar-link" to="/configuration">Configuration</Link>
+									<div className="navbar-dropdown">
+									</div>
+								</div>
+								<div className="navbar-item has-dropdown is-hoverable">
+									<Link className="navbar-link" to="/type-converters">Type Converters</Link>
+									<div className="navbar-dropdown">
+									</div>
+								</div>
+								<div className="navbar-item has-dropdown is-hoverable">
+									<Link className="navbar-link" to="/change-log">Change Log</Link>
+									<div className="navbar-dropdown">
+									</div>
+								</div>
 							</div>
 						</div>
 					</nav>
