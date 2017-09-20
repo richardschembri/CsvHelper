@@ -55,11 +55,7 @@ class Header extends Component {
 									<div className="navbar-dropdown">
 									</div>
 								</div>
-								<div className="navbar-item has-dropdown is-hoverable">
-									<Link className="navbar-link" to="/change-log">Change Log</Link>
-									<div className="navbar-dropdown">
-									</div>
-								</div>
+								<Link className="navbar-item" to="/change-log">Change Log</Link>
 							</div>
 						</div>
 					</nav>
