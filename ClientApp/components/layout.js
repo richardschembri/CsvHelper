@@ -52,7 +52,11 @@ marked.setOptions({
 	renderer,
 	highlight: (code, language, callback) => {
 		//code = code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-		return highlight.highlightAuto(code, [language]).value;
+		if (language) {
+			return highlight.highlight(language, code, true).value;
+		}
+
+		return highlight.highlightAuto(code).value;
 	}
 });
 
@@ -89,17 +93,15 @@ class Layout extends Component {
 
 	scrollToHash = () => {
 		if (!this.props.location.hash) {
+			window.scroll(0, 0);
 			return;
 		}
 
 		const hash = this.props.location.hash.substr(1);
 		const element = document.getElementById(hash);
-
-		if (!element) {
-			return;
+		if (element) {
+			element.scrollIntoView(true);
 		}
-
-		element.scrollIntoView(true);
 	}
 
 	render() {
@@ -111,6 +113,7 @@ class Layout extends Component {
 					<img src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub" />
 				</a>
 				<Header />
+				<div id="top-of-page"></div>
 				<div className="container">
 					<div className={page}
 						dangerouslySetInnerHTML={{ __html: marked(content) }}></div>

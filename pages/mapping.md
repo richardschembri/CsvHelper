@@ -1,8 +1,8 @@
 # Class Mapping
 
-Sometimes your class members and CSV headers don't match up. Something your don't have a header row and you need to specify an index for a member [because you can't rely on the ordering of class members in .NET](https://blogs.msdn.microsoft.com/haibo_luo/2006/07/10/member-order-returned-by-getfields-getmethods/). For these situations you can create a class map that maps a class property to a CSV field using the configuration you specify.
+Sometimes your class members and CSV headers don't match up. Sometimes your CSV files don't have a header row and you need to specify an index for a member [because you can't rely on the ordering of class members in .NET](https://blogs.msdn.microsoft.com/haibo_luo/2006/07/10/member-order-returned-by-getfields-getmethods/). For these situations you can create a class map that maps a class member to a CSV field using the configuration you specify.
 
-To create a mapping from a class to a CSV file, you use a `ClassMap`. You can map any public properties or fields.
+To create a mapping from a class to a CSV file, you use a `ClassMap`. You can map any public members (properties or fields).
 
 ```cs
 public class MyClass

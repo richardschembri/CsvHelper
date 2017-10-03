@@ -37,6 +37,25 @@ var anonymousTypeDefinition =
 var records = csv.GetRecords( anonymousTypeDefinition );
 ```
 
+### EnumerateRecords
+
+You can also enumerate the records while re-using a class instance that you give.
+Each enumeration will hydrate the given record, but only the mapped members. If you
+supplied a map and didn't map one of the members, that member will not get hydrated
+with the current row's data. Be careful. Any methods that you call on the projection
+that force the evaluation of the `IEnumerable`, such as `ToList()`, you will get a
+list where all the records are the same instance you provided that is hydrated with
+the last record in the CSV file.
+
+```cs
+var record = new MyClass();
+var records = csv.EnumerateRecords( record );
+foreach( var r in records )
+{
+	// r is the same instance as record.
+}
+```
+
 ## Reading Records
 
 <hr/>
