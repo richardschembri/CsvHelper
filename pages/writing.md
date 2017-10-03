@@ -25,6 +25,22 @@ var records = new List<MyClass>
 	new MyClass { Id = 2, Name = "two" },
 };
 csv.WriteRecords( records );
+
+// Dynamic
+var records = new List<dynamic>();
+dynamic record = new ExpandoObject();
+record.Id = 1;
+record.Name = "one";
+records.Add( record );
+csv.WriteRecords( records );
+
+// Anonymous
+var records = new List<object>
+{
+	new { Id = 1, Name = "one" },
+	new { Id = 2, Name = "two" },
+};
+csv.WriteRecords( records );
 ```
 
 ## Writing a Single Record
@@ -47,7 +63,18 @@ csv.WriteHeader( Type type );
 Writes a record.
 
 ```cs
-csv.WriteRecord<MyClass>( record );
+var record = new MyClass { Id = 1, Name = "one" };
+csv.WriteRecord( record );
+
+// Dynamic
+dynamic record = new ExpandoObject();
+record.Id = 1;
+record.Name = "one";
+csv.WriteRecord( record );
+
+// Anonymous
+var record = new { Id = 1, Name = "one" };
+csv.WriteRecord( record );
 ```
 
 ## Writing Fields
@@ -61,9 +88,30 @@ You can even write a single field.
 Write any type of object to a field. You can specify your own `ITypeConverter` to handle converting the type to a string if none of the built in converters work for you.
 
 ```cs
+// Write a string
 csv.WriteField( "field" );
+
+// Write a string passing in a value indicating
+// if the field should be quoted. This will ignore
+// any configuration and only quote based on the
+// shouldQuote parameter passed in.
+csv.WriteField( "field", true );
+
+// Write any type
 csv.WriteField( 1 );
+
+// Write any type and use the given type converter
+// to convert the type to a string.
 csv.WriteField( value, myTypeConverter );
+
+// Write any type and use the given type converter
+// to convert the type to a string.
+csv.WriteField<MyTypeConverter>( value );
+
+// Write a field that has already been converted
+// by a type converter. If the field is null, it
+// won't get written.
+csv.WriteConvertedField( "field" );
 ```
 
 ### WriteComment

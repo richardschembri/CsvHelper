@@ -20,9 +20,14 @@ If you want to use an anonymous type as your record, you can get the records by 
 Returns an `IEnumerable<T>` of records.
 
 ```cs
+// By type
 var records = csv.GetRecords<MyClass>();
 var records = csv.GetRecords( typeof( MyClass ) );
 
+// Dynamic
+var records = csv.GetRecords<dynamic>();
+
+// Using anonymous type for the class definition
 var anonymousTypeDefinition =
 {
 	Id = default( int ),
@@ -76,9 +81,14 @@ Sometimes there is a reason that you may need to loop the records yourself. You 
 ### GetRecord
 
 ```cs
+// By type
 var record = csv.GetRecord<MyClass>();
 var record = csv.GetRecord( typeof( MyClass ) );
 
+// Dynamic
+var record = csv.GetRecord<dynamic>();
+
+// Using anonymous type for the class definition
 var anonymousTypeDefinition =
 {
 	Id = default( int ),
@@ -99,7 +109,10 @@ If you need a more granular way of getting records, you are able to get individu
 You can use an indexer to get by position or name. This will return the field as a `string`.
 
 ```cs
+// By position
 var field = csv[0];
+
+// By header name
 var field = csv["HeaderName"];
 ```
 
@@ -108,9 +121,16 @@ var field = csv["HeaderName"];
 You can get fields converted to a specific type.
 
 ```cs
-var field = csv.GetField( 0 ); // returns string
+// Gets field by position returning string
+var field = csv.GetField( 0 );
+
+// Gets field by position returning int
 var field = csv.GetField<int>( 0 );
+
+// Gets field by header name returning bool
 var field = csv.GetField<bool>( "IsTrue" );
+
+// Gets field by header name returning object
 var field = csv.GetField( typeof( bool ), "IsTrue" );
 ```
 
