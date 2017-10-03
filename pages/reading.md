@@ -7,7 +7,7 @@ var csv = new CsvReader( textReader );
 var records = csv.GetRecords<MyClass>();
 ```
 
-### Getting All Records
+## Getting All Records
 
 <hr/>
 
@@ -15,7 +15,7 @@ The most common scenario is using one of the `GetRecords` methods.  You can spec
 
 If you want to use an anonymous type as your record, you can get the records by supplying a type definition. You can use `default( type )` for value types, and `new` for reference types.
 
-#### GetRecords
+### GetRecords
 
 Returns an `IEnumerable<T>` of records.
 
@@ -32,13 +32,13 @@ var anonymousTypeDefinition =
 var records = csv.GetRecords( anonymousTypeDefinition );
 ```
 
-### Reading Records
+## Reading Records
 
 <hr/>
 
 To be able to get individual records or even fields, you need to iterate through the records. This is done using the `Read` methods. `Read` will advance the reader to the next record. You must call `Read` before you can get any records or fields. When `GetRecords`, `Read` is automatically called for you.
 
-#### Read
+### Read
 
 This will advance the reader to the next record.
 
@@ -46,7 +46,7 @@ This will advance the reader to the next record.
 csv.Read();
 ```
 
-#### ReadAsync
+### ReadAsync
 
 This will advance the reader to the next record asynchronously. If the `TextReader` that was supplied is tied to a network or some other slow to read functionality, reading asynchronously is probably a good idea.
 
@@ -54,7 +54,7 @@ This will advance the reader to the next record asynchronously. If the `TextRead
 await csv.ReadAsync();
 ```
 
-#### ReadHeader
+### ReadHeader
 
 The header in a CSV file is just another record, but it has special meaning. If your file has a header record, you'll need to read the header after the first read. After that you can loop the records and read them. This will allow you to be able to read headers on different rows, or even multiple headers.
 
@@ -67,13 +67,13 @@ while( csv.Read() )
 }
 ```
 
-### Getting a Single Record
+## Getting a Single Record
 
 <hr/>
 
 Sometimes there is a reason that you may need to loop the records yourself. You can still easily get a single record, just like with multiple records.
 
-#### GetRecord
+### GetRecord
 
 ```cs
 var record = csv.GetRecord<MyClass>();
@@ -88,13 +88,13 @@ var anonymousTypeDefinition =
 var record = csv.GetRecord( anonymousTypeDefinition );
 ```
 
-### Getting Fields
+## Getting Fields
 
 <hr/>
 
 If you need a more granular way of getting records, you are able to get individual fields.
 
-#### Indexer
+### Indexer
 
 You can use an indexer to get by position or name. This will return the field as a `string`.
 
@@ -103,7 +103,7 @@ var field = csv[0];
 var field = csv["HeaderName"];
 ```
 
-#### GetField
+### GetField
 
 You can get fields converted to a specific type.
 
@@ -114,7 +114,7 @@ var field = csv.GetField<bool>( "IsTrue" );
 var field = csv.GetField( typeof( bool ), "IsTrue" );
 ```
 
-#### TryGetField
+### TryGetField
 
 If there data isn't consistent and sometimes may not be able to be converted to the correct type, you can use the `TryGetField` methods.
 
@@ -122,13 +122,13 @@ If there data isn't consistent and sometimes may not be able to be converted to 
 var success = csv.TryGetField<int>( 0, out string field );
 ```
 
-### Reading Context
+## Reading Context
 
 <hr/>
 
 When reading, all the information in the system is held in a context object. If you need to get raw system information for some reason, it's available here. When an exception is thrown, the context is included so you can inspect the current state of the reader.
 
-### Configuration
+## Configuration
 
 <hr/>
 

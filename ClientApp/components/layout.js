@@ -40,7 +40,8 @@ renderer.code = function (code, lang) {
 
 	return wrapInColumns(`<pre><code class="box ${lang}">${code}</code></pre>`);
 }
-renderer.heading = (text, level) => `<h${level} id="${toSeoFriendly(text)}" class="title is-${level}">${htmlEncode(text)}</h${level}>`;
+renderer.heading = (text, level) => `<h${level} id="${toSeoFriendly(text)}" class="title is-${level}"><span>${htmlEncode(text)}</span></h${level}>`;
+renderer.link = (href, title, text) => `<a href="${href}" target="_blank">${text}</a>`;
 renderer.list = (body, ordered) => {
 	return ordered
 		? `<div class="content"><ol>${body}</ol></div>` :
@@ -51,7 +52,7 @@ marked.setOptions({
 	renderer,
 	highlight: (code, language, callback) => {
 		//code = code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-		return highlight.highlightAuto(code).value;
+		return highlight.highlightAuto(code, [language]).value;
 	}
 });
 

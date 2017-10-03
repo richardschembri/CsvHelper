@@ -8,13 +8,13 @@ var csv = new CsvWriter( textWriter );
 csv.WriteRecords( records );
 ```
 
-### Writing All Records
+## Writing All Records
 
 <hr/>
 
 The most common scenario is using the `WriteRecords` method. You can pass it an `IEnumerable` of records and it will write those objects.
 
-#### WriteRecords
+### WriteRecords
 
 Writes all records.
 
@@ -27,13 +27,13 @@ var records = new List<MyClass>
 csv.WriteRecords( records );
 ```
 
-### Writing a Single Record
+## Writing a Single Record
 
 <hr/>
 
 Sometimes you want to write individual records by themselves.
 
-#### WriteHeader
+### WriteHeader
 
 Writes the header record. You can call this method on any row if you want to write multiple headers.
 
@@ -42,7 +42,7 @@ csv.WriteHeader<MyClass>();
 csv.WriteHeader( Type type );
 ```
 
-#### WriteRecord
+### WriteRecord
 
 Writes a record.
 
@@ -50,13 +50,13 @@ Writes a record.
 csv.WriteRecord<MyClass>( record );
 ```
 
-### Writing Fields
+## Writing Fields
 
 <hr/>
 
 You can even write a single field.
 
-#### WriteField
+### WriteField
 
 Write any type of object to a field. You can specify your own `ITypeConverter` to handle converting the type to a string if none of the built in converters work for you.
 
@@ -66,7 +66,7 @@ csv.WriteField( 1 );
 csv.WriteField( value, myTypeConverter );
 ```
 
-#### WriteComment
+### WriteComment
 
 This will write text to the field using the comment character supplied in `Configuration.Comment`.
 
@@ -74,13 +74,13 @@ This will write text to the field using the comment character supplied in `Confi
 csv.WriteComment( "This is a comment. ");
 ```
 
-### Ending the Row
+## Ending the Row
 
 <hr/>
 
 When you are done writing the row, you need to flush the fields and start a new row. Flushing and starting a new row are separated so that you can flush without creating a new row.
 
-#### Flush
+### Flush
 
 Serialize the fields to the `TextReader`.
 
@@ -88,7 +88,7 @@ Serialize the fields to the `TextReader`.
 csv.Flush();
 ```
 
-#### FlushAsync
+### FlushAsync
 
 Serialize the fields to the `TextReader` asynchronously. If the `TextReader` supplied is tied to a network or some other slow to write functionality, flushing asynchronously is probably a good idea.
 
@@ -96,7 +96,7 @@ Serialize the fields to the `TextReader` asynchronously. If the `TextReader` sup
 csv.FlushAsync();
 ```
 
-#### NextRecord
+### NextRecord
 
 Ends the current record and starts a new record. This will call `Flush` then write a newline.
 
@@ -104,7 +104,7 @@ Ends the current record and starts a new record. This will call `Flush` then wri
 csv.NextRecord();
 ```
 
-#### NextRecordAsync
+### NextRecordAsync
 
 Ends the current record and start a new record asynchronously. This will call `FlushAsync` then asynchronously write a newline.
 
@@ -112,13 +112,13 @@ Ends the current record and start a new record asynchronously. This will call `F
 csv.NextRecordAsync();
 ```
 
-### Writing Context
+## Writing Context
 
 <hr/>
 
 When writing, all the information in the system is held in a context object. If you need to get raw system information for some reason, it's available here. When an exception is throw, the context is included so you can inspect the current state of the writer.
 
-### Configuration
+## Configuration
 
 <hr/>
 
