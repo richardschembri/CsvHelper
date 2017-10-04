@@ -178,20 +178,84 @@ Map( m => m.Id ).Index( 0 );
 
 ### Default
 
+Specifies a default value when reading that will be used when a field is empty.
+
+```cs
+Map( m => m.Name ).Default( "empty" );
+```
+
 ### Constant
+
+Specifies a value that will be used as a constant for a field when reading and writing. This value will always be used regardless of other mapping configurations.
+
+```cs
+Map( m => m.Name ).Constant( "never changes" );
+```
 
 ### Ignore
 
+Ignores the member when reading and writing. Note: If this member has already been mapped as a reference member, either by a class map, or by auto mapping, calling this method will not ignore all the child members down the tree that have already been mapped.
+
+```cs
+Map( m => m.Name ).Ignore();
+```
+
 ### TypeConverter
+
+Specifies the `ITypeConverter` that is used when converting the member to and from a CSV field.
+
+```cs
+Map( m => m.Name ).TypeConverter( new MyConverter() );
+Map( m => m.Name ).TypeConverter<MyConverter>();
+```
 
 ### ConvertUsing
 
+Specifies an expression to be used to convert a field to a member, or a member to a field.
+
+```cs
+// Convert to member
+Map( m => m.Aggregate ).ConvertUsing( row => row.Get<int>( "A" ) + row.Get<int>( "B" ) );
+
+// Block
+Map( m => m.Aggregate ).ConvertUsing( row =>
+{
+	var a = row.Get<int>( "A" );
+	var b = row.Get<int>( "B" );
+	return a + b;
+} );
+
+// Convert to field
+Map( m => m.Aggregate ).ConvertUsing( m => $"A + B = {m.A + m.B}" );
+
+// Block
+Map( m => m.Aggregate ).ConvertUsing( m =>
+{
+	var field = "A + B = ";
+	field += ( m.A + m.B ).ToString();
+	return field;
+} );
+```
+
 ### Validate
 
-## FAQ
+Specifies an expression to be used to validate a field when reading. If the expression returns `false`, a `ValidationException` is thrown.
 
-<hr/>
+```cs
+// Ensure field isn't blank.
+Map( m => m.Number ).Validate( field => !string.IsNullOrEmpty( field ) );
 
-### How Do I Map Private Fields?
+// Log error instead of throwing an exception.
+Map( m => m.Number ).Validate( field =>
+{
+	var isValid = !string.IsNullOrEmpty( field );
+	if( !isValid )
+	{
+		logger.AppendLine( $"Field '{field}' is not valid!" );
+	}
+
+	return true;
+} );
+```
 
 <br/>

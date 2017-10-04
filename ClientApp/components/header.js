@@ -48,6 +48,9 @@ class Header extends Component {
 								<div className="navbar-item has-dropdown is-hoverable">
 									<Link className="navbar-link" to="/mapping">Mapping</Link>
 									<div className="navbar-dropdown">
+										<Link className="navbar-item" to="mapping#reference-mapping">Reference Mapping</Link>
+										<Link className="navbar-item" to="mapping#auto-mapping">Auto Mapping</Link>
+										<Link className="navbar-item" to="mapping#options">Options</Link>
 									</div>
 								</div>
 								<div className="navbar-item has-dropdown is-hoverable">
@@ -58,6 +61,12 @@ class Header extends Component {
 								<div className="navbar-item has-dropdown is-hoverable">
 									<Link className="navbar-link" to="/type-converters">Type Converters</Link>
 									<div className="navbar-dropdown">
+									</div>
+								</div>
+								<div className="navbar-item has-dropdown is-hoverable">
+									<Link className="navbar-link" to="/examples">Examples</Link>
+									<div className="navbar-dropdown">
+										<Link className="navbar-item" to="examples#private-members">Private Members</Link>
 									</div>
 								</div>
 								<Link className="navbar-item" to="/change-log">Change Log</Link>
