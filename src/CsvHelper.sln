@@ -22,10 +22,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsvHelper.Tests", "CsvHelpe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsvHelper.Performance", "CsvHelper.Performance\CsvHelper.Performance.csproj", "{9DC1A5EB-4E87-4449-B5B2-241ACD5121E1}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CsvHelper.FSharpRecords", "CsvHelper.FSharpRecords\CsvHelper.FSharpRecords.fsproj", "{727B127B-D3E5-4488-810E-5ABA0825AD56}"
+EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
@@ -99,12 +98,35 @@ Global
 		{9DC1A5EB-4E87-4449-B5B2-241ACD5121E1}.Release|x64.Build.0 = Release|Any CPU
 		{9DC1A5EB-4E87-4449-B5B2-241ACD5121E1}.Release|x86.ActiveCfg = Release|Any CPU
 		{9DC1A5EB-4E87-4449-B5B2-241ACD5121E1}.Release|x86.Build.0 = Release|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Debug|ARM.Build.0 = Debug|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Debug|x64.Build.0 = Debug|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Debug|x86.Build.0 = Debug|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Release|ARM.ActiveCfg = Release|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Release|ARM.Build.0 = Release|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Release|x64.ActiveCfg = Release|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Release|x64.Build.0 = Release|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Release|x86.ActiveCfg = Release|Any CPU
+		{727B127B-D3E5-4488-810E-5ABA0825AD56}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F48D3EE-214D-45F4-AC6A-3E95C3A25E9F}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true

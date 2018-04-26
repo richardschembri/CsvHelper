@@ -40,6 +40,42 @@ namespace CsvHelper.Expressions
 				Writer.Context.WriterConfiguration.Maps.Add( Writer.Context.WriterConfiguration.AutoMap( type ) );
 			}
 
+			var map = Writer.Context.WriterConfiguration.Maps[type];
+
+			Action<T> action;
+			if( map.ParameterMaps.Count > 0 )
+			{
+				action = CreateConstructorParametersWriteDelegate<T>( type, map );
+			}
+			else
+			{
+				action = CreatePropertyWriteDelegate<T>( type, map );
+			}
+
+			return action;
+		}
+
+		private Action<T> CreateConstructorParametersWriteDelegate<T>( Type type, ClassMap map )
+		{
+			var recordParameter = Expression.Parameter( typeof( T ), "record" );
+			var recordParameterConverted = Expression.Convert( recordParameter, type );
+
+			foreach( var parameterMap in map.ParameterMaps )
+			{
+				if( parameterMap.Data.TypeConverter == null )
+				{
+					// Skip if the type isn't convertible.
+					continue;
+				}
+
+				Expression fieldExpression = ExpressionManager.CreateGetMemberExpression( recordParameterConverted, map, parameterMap.Data.)
+			}
+
+			throw new NotImplementedException();
+		}
+
+		private Action<T> CreatePropertyWriteDelegate<T>( Type type, ClassMap map )
+		{
 			var recordParameter = Expression.Parameter( typeof( T ), "record" );
 			var recordParameterConverted = Expression.Convert( recordParameter, type );
 

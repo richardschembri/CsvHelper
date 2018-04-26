@@ -15,6 +15,7 @@
 		</ItemGroup>
 
 		<ItemGroup>
+		  <ProjectReference Include="..\CsvHelper.FSharpRecords\CsvHelper.FSharpRecords.fsproj" />
 		  <ProjectReference Include="..\CsvHelper\CsvHelper.csproj" />
 		</ItemGroup>
 

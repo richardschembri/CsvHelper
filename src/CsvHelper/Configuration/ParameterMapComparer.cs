@@ -4,30 +4,34 @@
 // https://github.com/JoshClose/CsvHelper
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CsvHelper.Configuration
 {
 	/// <summary>
-	/// Used to compare <see cref="MemberMap"/>s.
+	/// Used to compare <see cref="ParameterMap"/>s.
 	/// The order is by field index ascending. Any
 	/// fields that don't have an index are pushed
 	/// to the bottom.
 	/// </summary>
-	internal class MemberMapComparer : IComparer<MemberMap>
+	internal class ParameterMapComparer : IComparer<ParameterMap>
 	{
 		public virtual int Compare( object x, object y )
 		{
-			var xMember = x as MemberMap;
-			var yMember = y as MemberMap;
-			return Compare( xMember, yMember );
+			var xParameter = x as ParameterMap;
+			var yParameter = y as ParameterMap;
+			return Compare( xParameter, yParameter );
 		}
 
-		public virtual int Compare( MemberMap x, MemberMap y )
+		public virtual int Compare( ParameterMap x, ParameterMap y )
 		{
 			if( x == null )
 			{
 				throw new ArgumentNullException( nameof( x ) );
 			}
+
 			if( y == null )
 			{
 				throw new ArgumentNullException( nameof( y ) );

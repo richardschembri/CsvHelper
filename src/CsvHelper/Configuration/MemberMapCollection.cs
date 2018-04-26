@@ -13,7 +13,7 @@ using System.Reflection;
 namespace CsvHelper.Configuration
 {
 	/// <summary>
-	/// A collection that holds <see cref="MemberMap"/>'s.
+	/// A collection that holds <see cref="MemberMap"/>s.
 	/// </summary>
 	[DebuggerDisplay( "Count = {list.Count}" )]
 	public class MemberMapCollection : IList<MemberMap>
