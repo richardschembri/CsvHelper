@@ -1,4 +1,7 @@
 # CsvHelper
+## Please Note
+_WORK IN PROGRESS to modify the code to work with Unity (.Net 4.6)_
+
 
 [![Join the chat at https://gitter.im/CsvHelper/Lobby](https://badges.gitter.im/CsvHelper/Lobby.svg)](https://gitter.im/CsvHelper/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
