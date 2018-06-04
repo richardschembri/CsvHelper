@@ -103,7 +103,10 @@ namespace CsvHelper.Configuration
 		/// logging the issue.
 		/// Arguments: exception
 		/// </summary>
-		public virtual Action<CsvHelperException> ReadingExceptionOccurred { get; set; } = exception => throw exception;
+		public virtual Action<CsvHelperException> ReadingExceptionOccurred { get; set; } = exception => {
+			throw exception;
+		};
+		//public virtual Action<CsvHelperException> ReadingExceptionOccurred { get; set; } = exception => throw exception;
 
 		/// <summary>
 		/// Gets or sets the callback that will be called to
@@ -394,8 +397,10 @@ namespace CsvHelper.Configuration
 		/// <summary>
 		/// The configured <see cref="ClassMap"/>s.
 		/// </summary>
-		public virtual ClassMapCollection Maps => maps;
+		public virtual ClassMapCollection Maps {get{return maps;}} 
+		//public virtual ClassMapCollection Maps => maps;
 
+		bool m_UseNewObjectForNullReferenceMembers = true;
 		/// <summary>
 		/// Gets or sets a value indicating that during writing if a new 
 		/// object should be created when a reference member is null.
@@ -403,7 +408,14 @@ namespace CsvHelper.Configuration
 		/// fields, or false to leave the fields empty for all the
 		/// reference member's member.
 		/// </summary>
-		public virtual bool UseNewObjectForNullReferenceMembers { get; set; } = true;
+		public virtual bool UseNewObjectForNullReferenceMembers { 
+			get{
+				return m_UseNewObjectForNullReferenceMembers;
+			} set{
+				m_UseNewObjectForNullReferenceMembers = value;
+			} 
+		} 
+		//public virtual bool UseNewObjectForNullReferenceMembers { get; set; } = true;
 
 		/// <summary>
 		/// Creates a new CsvConfiguration.

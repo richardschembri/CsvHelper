@@ -38,17 +38,36 @@ namespace CsvHelper.Configuration
 		/// </summary>
 		public virtual bool IsNameSet { get; set; }
 
+
+		int m_Index = -1;
+
 		/// <summary>
 		/// Gets or sets the column index.
 		/// </summary>
-		public virtual int Index { get; set; } = -1;
+		public virtual int Index { 
+			get{
+				return m_Index;
+			} set{
+				m_Index = value;
+			} 
+		}
 
+		//public virtual int Index { get; set; } = -1;
+
+		int m_IndexEnd = -1;
 		/// <summary>
 		/// Gets or sets the index end. The Index end is used to specify a range for use
 		/// with a collection member. Index is used as the start of the range, and IndexEnd
 		/// is the end of the range.
 		/// </summary>
-		public virtual int IndexEnd { get; set; } = -1;
+		public virtual int IndexEnd { 
+			get{
+				return m_IndexEnd ;
+			} set{
+				m_IndexEnd = value;
+			} 
+		} 
+		//public virtual int IndexEnd { get; set; } = -1;
 
 		/// <summary>
 		/// Gets or sets a value indicating if the index was
@@ -62,10 +81,19 @@ namespace CsvHelper.Configuration
 		/// </summary>
 		public virtual ITypeConverter TypeConverter { get; set; }
 
+		TypeConverterOptions m_TypeConverterOptions = new TypeConverterOptions();
 		/// <summary>
 		/// Gets or sets the type converter options.
 		/// </summary>
-		public virtual TypeConverterOptions TypeConverterOptions { get; set; } = new TypeConverterOptions();
+		public virtual TypeConverterOptions TypeConverterOptions { 
+			get{
+				return m_TypeConverterOptions;
+			} set{
+				m_TypeConverterOptions = value;
+			} 
+		} 
+
+		//public virtual TypeConverterOptions TypeConverterOptions { get; set; } = new TypeConverterOptions();
 
 		/// <summary>
 		/// Gets or sets a value indicating whether the field should be ignored.

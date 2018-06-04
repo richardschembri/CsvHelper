@@ -35,12 +35,14 @@ namespace CsvHelper.Configuration
 		/// Gets the raw list of names without
 		/// the prefix being prepended.
 		/// </summary>
-		public List<string> Names => names;
+		//public List<string> Names => names;
+		public List<string> Names{get{return names;}}  
 
 		/// <summary>
 		/// Gets the count.
 		/// </summary>
-		public int Count => names.Count;
+		//public int Count => names.Count;
+		public int Count{get{return names.Count;}}
 
 		/// <summary>
 		/// Adds the given name to the collection.

@@ -78,8 +78,13 @@ namespace CsvHelper
 		/// <param name="parser">The <see cref="IParser" /> used to parse the CSV file.</param>
 		public CsvReader( IParser parser )
 		{
-			this.parser = parser ?? throw new ArgumentNullException( nameof( parser ) );
-			context = parser.Context as ReadingContext ?? throw new InvalidOperationException( $"For {nameof( IParser )} to be used in {nameof( CsvReader )}, {nameof( IParser.Context )} must also implement {nameof( ReadingContext )}." );
+			//this.parser = parser ?? throw new ArgumentNullException( nameof( parser ) );
+			this.parser = CSharp6Extension.GetArgumentOrThrowException<IParser>( parser, "parser");
+			//context = parser.Context as ReadingContext ?? throw new InvalidOperationException( $"For {nameof( IParser )} to be used in {nameof( CsvReader )}, {nameof( IParser.Context )} must also implement {nameof( ReadingContext )}." );
+			context = parser.Context as ReadingContext;
+			if(context == null){
+				throw new InvalidOperationException( $"For {nameof( IParser )} to be used in {nameof( CsvReader )}, {nameof( IParser.Context )} must also implement {nameof( ReadingContext )}." );
+			}	
 			recordManager = new RecordManager( this );
 		}
 
@@ -223,6 +228,7 @@ namespace CsvHelper
 			return context.Record != null;
 		}
 
+/* 
 		/// <summary>
 		/// Advances the reader to the next record. This will not read headers.
 		/// You need to call <see cref="ReadAsync"/> then <see cref="ReadHeader"/> 
@@ -254,6 +260,7 @@ namespace CsvHelper
 
 			return context.Record != null;
 		}
+*/
 
 		/// <summary>
 		/// Gets the raw field at position (column) index.
@@ -429,7 +436,11 @@ namespace CsvHelper
 
 			context.ReusableMemberMapData.Index = index;
 			context.ReusableMemberMapData.TypeConverter = converter;
-			if( !context.TypeConverterOptionsCache.TryGetValue( type, out TypeConverterOptions typeConverterOptions ) )
+
+
+			//if( !context.TypeConverterOptionsCache.TryGetValue( type, out TypeConverterOptions typeConverterOptions ) )
+			TypeConverterOptions typeConverterOptions = CSharp6Extension.TryGetValue<Type, TypeConverterOptions>(context.TypeConverterOptionsCache, type);
+			if(typeConverterOptions == default(TypeConverterOptions))
 			{
 				typeConverterOptions = TypeConverterOptions.Merge( new TypeConverterOptions { CultureInfo = context.ReaderConfiguration.CultureInfo }, context.ReaderConfiguration.TypeConverterOptionsCache.GetOptions( type ) );
 				context.TypeConverterOptionsCache.Add( type, typeConverterOptions );
@@ -952,7 +963,8 @@ namespace CsvHelper
 
 				if( !Read() )
 				{
-					return default;
+					//return default;
+					return default(T);
 				}
 			}
 
@@ -967,7 +979,8 @@ namespace CsvHelper
 
 				context.ReaderConfiguration.ReadingExceptionOccurred?.Invoke( csvHelperException );
 
-				record = default;
+				//record = default;
+				record = default(T);
 			}
 
 			return record;
@@ -1025,7 +1038,8 @@ namespace CsvHelper
 
 				context.ReaderConfiguration.ReadingExceptionOccurred?.Invoke( csvHelperException );
 
-				record = default;
+				//record = default;
+				record = default(object);
 			}
 
 			return record;
@@ -1228,7 +1242,9 @@ namespace CsvHelper
 			if( context.NamedIndexCache.ContainsKey( nameKey ) )
 			{
 				var tuple = context.NamedIndexCache[nameKey];
-				return context.NamedIndexes[tuple.Item1][tuple.Item2];
+				
+				//return context.NamedIndexes[tuple.Item1][tuple.Item2];
+				return context.NamedIndexes[tuple.First][tuple.Second];
 			}
 
 			// Check all possible names for this field.

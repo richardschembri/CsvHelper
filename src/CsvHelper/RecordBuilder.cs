@@ -19,12 +19,14 @@ namespace CsvHelper
 		/// <summary>
 		/// The number of records.
 		/// </summary>
-	    public int Length => position;
+	    //public int Length => position;
+	    public int Length{get{return position;}}
 
 		/// <summary>
 		/// The total record capacity.
 		/// </summary>
-		public int Capacity => capacity;
+		//public int Capacity => capacity;
+		public int Capacity {get{return capacity;}}
 
 		/// <summary>
 		/// Creates a new <see cref="RecordBuilder"/> using defaults.

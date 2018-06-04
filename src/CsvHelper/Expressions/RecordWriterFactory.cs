@@ -37,15 +37,21 @@ namespace CsvHelper.Expressions
 		{
 			var type = writer.GetTypeForRecord( record );
 
-			if( record is ExpandoObject expandoObject )
+			ExpandoObject expandoObject = record as ExpandoObject;
+			//if( record is ExpandoObject expandoObject )
+			if( record !=  null)
 			{
 				return new ExpandoObjectRecordWriter( writer );
 			}
 
-			if( record is IDynamicMetaObjectProvider dynamicObject )
+			/* 
+			IDynamicMetaObjectProvider dynamicObject = record as IDynamicMetaObjectProvider;
+			//if( record is IDynamicMetaObjectProvider dynamicObject )
+			if( record !=  null )
 			{
 				return new DynamicRecordWriter( writer );
 			}
+			*/
 
 			if( type.GetTypeInfo().IsPrimitive )
 			{

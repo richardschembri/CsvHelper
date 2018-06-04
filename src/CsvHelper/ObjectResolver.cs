@@ -79,8 +79,18 @@ namespace CsvHelper
 		/// Default value is true.</param>
 		public ObjectResolver( Func<Type, bool> canResolve, Func<Type, object[], object> resolveFunction, bool useFallback = true )
 		{
-			CanResolve = canResolve ?? throw new ArgumentNullException( nameof( canResolve ) );
-			ResolveFunction = resolveFunction ?? throw new ArgumentNullException( nameof( resolveFunction ) );
+			//CanResolve = canResolve ?? throw new ArgumentNullException( nameof( canResolve ) );
+			if(canResolve != null){
+				CanResolve = canResolve;
+			}else{
+				throw new ArgumentNullException(CSharp6Extension.nameof( () => canResolve ) );
+			}
+			//ResolveFunction = resolveFunction ?? throw new ArgumentNullException( nameof( resolveFunction ) );
+			if(resolveFunction != null){
+				ResolveFunction = resolveFunction;
+			}else{
+				throw new ArgumentNullException(CSharp6Extension.nameof( () => resolveFunction ) );
+			}
 			UseFallback = useFallback;
 		}
 
@@ -105,7 +115,8 @@ namespace CsvHelper
 				return ReflectionHelper.CreateInstance( type, constructorArgs );
 			}
 
-			throw new CsvHelperException( $"Type '{type.FullName}' can't be resolved and fallback is turned off." );
+			//throw new CsvHelperException( $"Type '{type.FullName}' can't be resolved and fallback is turned off." );
+			throw new CsvHelperException( string.Format("Type '{0}' can't be resolved and fallback is turned off.",  type.FullName));
 		}
 
 		/// <summary>

@@ -6,7 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
+//using System.Threading.Tasks;
 
 namespace CsvHelper
 {
@@ -38,7 +39,7 @@ namespace CsvHelper
 		/// </summary>
 		/// <returns>True if there is more data left.
 		/// False if all the data has been read.</returns>
-		Task<bool> FillBufferAsync();
+		//Task<bool> FillBufferAsync();
 
 		/// <summary>
 		/// Gets the next char as an <see cref="int"/>.

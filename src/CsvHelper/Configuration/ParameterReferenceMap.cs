@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
 namespace CsvHelper.Configuration
 {
@@ -21,8 +21,9 @@ namespace CsvHelper.Configuration
 		/// <summary>
 		/// Gets the parameter reference map data.
 		/// </summary>
-		public ParameterReferenceMapData Data => data;
+		public ParameterReferenceMapData Data {get {return data;}}
 
+		//public ParameterReferenceMapData Data => data;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ParameterReferenceMap"/> class.
 		/// </summary>
@@ -32,7 +33,8 @@ namespace CsvHelper.Configuration
 		{
 			if( mapping == null )
 			{
-				throw new ArgumentNullException( nameof( mapping ) );
+				//throw new ArgumentNullException( nameof( mapping ) );
+				throw new ArgumentNullException(CSharp6Extension.nameof(() => mapping ) );
 			}
 
 			data = new ParameterReferenceMapData( parameter, mapping );

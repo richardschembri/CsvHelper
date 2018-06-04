@@ -193,8 +193,10 @@ namespace CsvHelper
 		/// <param name="leaveOpen">A value indicating if the TextReader should be left open when disposing.</param>
 		public ReadingContext( TextReader reader, Configuration.Configuration configuration, bool leaveOpen )
 		{
-			Reader = reader ?? throw new ArgumentNullException( nameof( reader ) );
-			this.configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
+			//Reader = reader ?? throw new ArgumentNullException( nameof( reader ) );
+			Reader = CSharp6Extension.GetArgumentOrThrowException<TextReader>(reader, nameof( reader )); // ?? throw new ArgumentNullException( nameof( reader ) );
+			//this.configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
+			this.configuration = CSharp6Extension.GetArgumentOrThrowException<Configuration.Configuration>(configuration, nameof( configuration )); //configuration ?? throw new ArgumentNullException( nameof( configuration ) );
 			LeaveOpen = leaveOpen;
 			Buffer = new char[0];
 		}

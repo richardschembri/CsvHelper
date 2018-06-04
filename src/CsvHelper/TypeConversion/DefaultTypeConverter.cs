@@ -28,10 +28,15 @@ namespace CsvHelper.TypeConversion
 			{
 				return string.Empty;
 			}
-
-			if( value is IFormattable formattable )
+			//if( value is IFormattable formattable )
+			IFormattable formattable = value as IFormattable;
+			if( formattable != null )
 			{
-				var format = memberMapData.TypeConverterOptions.Formats?.FirstOrDefault();
+				//var format = memberMapData.TypeConverterOptions.Formats?.FirstOrDefault();
+				string format = null;
+				if(memberMapData.TypeConverterOptions.Formats != null){
+					format = memberMapData.TypeConverterOptions.Formats.FirstOrDefault();
+				}
 				return formattable.ToString( format, memberMapData.TypeConverterOptions.CultureInfo );
 			}
 
@@ -47,11 +52,28 @@ namespace CsvHelper.TypeConversion
 		/// <returns>The object created from the string.</returns>
 		public virtual object ConvertFromString( string text, IReaderRow row, MemberMapData memberMapData )
 		{
+			/* 
 			var message =
 				$"The conversion cannot be performed.\r\n" +
 				$"    Text: '{text}'\r\n" +
 				$"    MemberType: {memberMapData.Member?.MemberType().FullName}\r\n" +
 				$"    TypeConverter: '{memberMapData.TypeConverter?.GetType().FullName}'";
+			throw new TypeConverterException( this, memberMapData, text, (ReadingContext)row.Context, message );
+			*/
+			string mmdName = "";
+			if (memberMapData.Member != null){
+				mmdName = memberMapData.Member.MemberType().FullName;
+			}
+
+			string mmdTypeName = "";
+			if(memberMapData.TypeConverter != null){
+				mmdTypeName = memberMapData.TypeConverter.GetType().FullName;
+			}
+			var message =
+				"The conversion cannot be performed.\r\n" +
+				string.Format("    Text: '{0}'\r\n", text) +
+				string.Format("    MemberType: {0}\r\n", mmdName) +
+				string.Format("    TypeConverter: '{0}'", mmdTypeName) ;
 			throw new TypeConverterException( this, memberMapData, text, (ReadingContext)row.Context, message );
 		}
 	}

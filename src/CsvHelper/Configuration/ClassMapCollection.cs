@@ -40,7 +40,8 @@ namespace CsvHelper.Configuration
 						return data[currentType];
 					}
 
-					currentType = currentType.GetTypeInfo().BaseType;
+					//currentType = currentType.GetTypeInfo().BaseType;
+					currentType = currentType.BaseType;
 					if( currentType == null )
 					{
 						return null;
@@ -121,12 +122,14 @@ namespace CsvHelper.Configuration
 		/// <returns>The type that is CsvClassMap{}.</returns>
 		private Type GetGenericCsvClassMapType( Type type )
 		{
-			if( type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof( ClassMap<> ) )
+			//if( type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof( ClassMap<> ) )
+			if( type.IsGenericType && type.GetGenericTypeDefinition() == typeof( ClassMap<> ) )
 			{
 				return type;
 			}
 
-			return GetGenericCsvClassMapType( type.GetTypeInfo().BaseType );
+			//return GetGenericCsvClassMapType( type.GetTypeInfo().BaseType );
+			return GetGenericCsvClassMapType( type.BaseType );
 		}
 
 		/// <summary>

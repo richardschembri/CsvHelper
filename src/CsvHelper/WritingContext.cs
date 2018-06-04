@@ -32,22 +32,33 @@ namespace CsvHelper
 		/// <summary>
 		/// Gets or sets the reusable member map data.
 		/// </summary>
-		public MemberMapData ReusableMemberMapData { get; set; } = new MemberMapData( null );
+		MemberMapData m_ReusableMemberMapData = new MemberMapData( null );
+		public MemberMapData ReusableMemberMapData { 
+			get{
+				return m_ReusableMemberMapData;
+			} 
+			set{
+				m_ReusableMemberMapData = value;
+			}
+		} 
 
 		/// <summary>
 		/// Gets the writer configuration.
 		/// </summary>
-		public virtual IWriterConfiguration WriterConfiguration => configuration;
+		public virtual IWriterConfiguration WriterConfiguration{ get{return configuration;}}
+		//public virtual IWriterConfiguration WriterConfiguration => configuration;
 
 		/// <summary>
 		/// Gets the serializer configuration.
 		/// </summary>
-		public virtual ISerializerConfiguration SerializerConfiguration => configuration;
+		public virtual ISerializerConfiguration SerializerConfiguration{get{return configuration;}}  
+		//public virtual ISerializerConfiguration SerializerConfiguration => configuration;
 
 		/// <summary>
 		/// Gets the <see cref="TextWriter"/>.
 		/// </summary>
-		public virtual TextWriter Writer => writer;
+		public virtual TextWriter Writer{get{return writer;}}  
+		//public virtual TextWriter Writer => writer;
 
 		/// <summary>
 		/// Gets a value indicating if the <see cref="Writer"/>
@@ -58,7 +69,15 @@ namespace CsvHelper
 		/// <summary>
 		/// Gets the current row.
 		/// </summary>
-		public virtual int Row { get; set; } = 1;
+		public int m_Row = 1;
+		public virtual int Row { 
+			get{
+				return m_Row;
+			} set{
+				m_Row = value;
+			} 
+		}
+		//public virtual int Row { get; set;}  = 1;
 
 		/// <summary>
 		/// Get the current record;
@@ -83,8 +102,14 @@ namespace CsvHelper
 		/// <param name="leaveOpen">A value indicating if the TextWriter should be left open.</param>
 		public WritingContext( TextWriter writer, Configuration.Configuration configuration, bool leaveOpen )
 		{
-			this.writer = writer ?? throw new ArgumentNullException( nameof( writer ) );
-			this.configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
+			//this.writer = writer ?? throw new ArgumentNullException( nameof( writer ) );
+			if(this.writer == null){
+				throw new ArgumentNullException(CSharp6Extension.nameof( () => writer));
+			}
+			//this.configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
+			if(this.configuration == null){
+				throw new ArgumentNullException( CSharp6Extension.nameof(() =>  configuration ) );
+			}
 			LeaveOpen = leaveOpen;
 		}
 
@@ -128,7 +153,10 @@ namespace CsvHelper
 
 			if( disposing )
 			{
-				writer?.Dispose();
+				//writer?.Dispose();
+				if(writer != null){
+					writer.Dispose();
+				}
 			}
 
 			writer = null;

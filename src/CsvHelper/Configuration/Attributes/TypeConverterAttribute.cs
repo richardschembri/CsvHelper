@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
 namespace CsvHelper.Configuration.Attributes
 {
@@ -32,13 +32,16 @@ namespace CsvHelper.Configuration.Attributes
 		{
 			if( typeConverterType == null )
 			{
-				throw new ArgumentNullException( nameof( typeConverterType ) );
+				//throw new ArgumentNullException( nameof( typeConverterType ) );
+				throw new ArgumentNullException( CSharp6Extension.nameof( () => typeConverterType ) );
 			}
 
 			TypeConverter = ReflectionHelper.CreateInstance( typeConverterType ) as ITypeConverter;
-			if( TypeConverter is null )
+			//if( TypeConverter is null )
+			if( TypeConverter == null )
 			{
-				throw new ArgumentException( $"Type '{typeConverterType.FullName}' does not implement {nameof( ITypeConverter )}" );
+				//throw new ArgumentException( $"Type '{typeConverterType.FullName}' does not implement {nameof( ITypeConverter )}" );
+				throw new ArgumentException( string.Format( "Type '{0}' does not implement {1}", typeConverterType.FullName, "ITypeConverter"   ));
 			}
 		}
     }

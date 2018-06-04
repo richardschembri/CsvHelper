@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
 namespace CsvHelper.Configuration
 {
@@ -30,15 +30,25 @@ namespace CsvHelper.Configuration
 		/// </summary>
 		public virtual ITypeConverter TypeConverter { get; set; }
 
+		TypeConverterOptions m_TypeConverterOptions = new TypeConverterOptions();
 		/// <summary>
 		/// Gets or sets the type converter options.
 		/// </summary>
-		public virtual TypeConverterOptions TypeConverterOptions { get; set; } = new TypeConverterOptions();
+		public virtual TypeConverterOptions TypeConverterOptions { 
+			get{
+				return m_TypeConverterOptions; 
+			} 
+			set{
+				m_TypeConverterOptions = value;
+			} 
+		} 
+		//public virtual TypeConverterOptions TypeConverterOptions { get; set; } = new TypeConverterOptions();
 
+		int m_Index = -1;
 		/// <summary>
 		/// Gets or sets the column index.
 		/// </summary>
-		public virtual int Index { get; set; } = -1;
+		public virtual int Index { get{return m_Index;} set{m_Index = value;} } 
 
 		/// <summary>
 		/// Gets or sets the column name.

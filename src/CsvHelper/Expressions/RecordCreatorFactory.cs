@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
 namespace CsvHelper.Expressions
 {
@@ -38,7 +38,8 @@ namespace CsvHelper.Expressions
 				return new DynamicRecordCreator( reader );
 			}
 
-			if( recordType.GetTypeInfo().IsPrimitive )
+			//if( recordType.GetTypeInfo().IsPrimitive )
+			if( recordType.IsPrimitive )
 			{
 				return new PrimitiveRecordCreator( reader );
 			}

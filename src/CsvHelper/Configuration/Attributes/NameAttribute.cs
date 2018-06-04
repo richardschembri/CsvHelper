@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
 namespace CsvHelper.Configuration.Attributes
 {
@@ -56,7 +56,8 @@ namespace CsvHelper.Configuration.Attributes
 		{
 			if( names == null || names.Length == 0 )
 			{
-				throw new ArgumentNullException( nameof( names ) );
+				//throw new ArgumentNullException( nameof( names ) );
+				throw new ArgumentNullException( CSharp6Extension.nameof( () => names ) );
 			}
 
 			Names = names;

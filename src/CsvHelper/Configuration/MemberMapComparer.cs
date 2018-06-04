@@ -61,11 +61,13 @@ namespace CsvHelper.Configuration
 		{
 			if( x == null )
 			{
-				throw new ArgumentNullException( nameof( x ) );
+				//throw new ArgumentNullException( nameof( x ) );
+				throw new ArgumentNullException( CSharp6Extension.nameof(() => x ) );
 			}
 			if( y == null )
 			{
-				throw new ArgumentNullException( nameof( y ) );
+				//throw new ArgumentNullException( nameof( y ) );
+				throw new ArgumentNullException( CSharp6Extension.nameof(() => y ) );
 			}
 
 			return x.Data.Index.CompareTo( y.Data.Index );

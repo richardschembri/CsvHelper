@@ -40,7 +40,9 @@ namespace CsvHelper.TypeConversion
 		/// <returns>The string representation of the object.</returns>
 		public override string ConvertToString( object value, IWriterRow row, MemberMapData memberMapData )
 		{
-			if( value is byte[] byteArray )
+			byte[] byteArray = value as byte[];
+			//if( value is byte[] byteArray )
+			if( byteArray != null )
 			{
 				return ( options & ByteArrayConverterOptions.Base64 ) == ByteArrayConverterOptions.Base64
 					? Convert.ToBase64String( byteArray )
@@ -115,7 +117,8 @@ namespace CsvHelper.TypeConversion
 			{
 				if( ( options & ( ByteArrayConverterOptions.HexInclude0x | ByteArrayConverterOptions.HexDashes | ByteArrayConverterOptions.Hexadecimal ) ) != ByteArrayConverterOptions.None )
 				{
-					throw new ConfigurationException( $"{nameof( ByteArrayConverter )} must be configured exclusively with HexDecimal options, or exclusively with Base64 options.  Was {options.ToString()}" )
+					//throw new ConfigurationException( $"{nameof( ByteArrayConverter )} must be configured exclusively with HexDecimal options, or exclusively with Base64 options.  Was {options.ToString()}" )
+					throw new ConfigurationException( string.Format("{0} must be configured exclusively with HexDecimal options, or exclusively with Base64 options.  Was {1}", "ByteArrayConverter",  options.ToString()) )
 					{
 						Data = { { "options", options } }
 					};

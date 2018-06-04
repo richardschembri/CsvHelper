@@ -111,7 +111,8 @@ namespace CsvHelper.Configuration
 		{
 			if( !typeof( ClassMap ).IsAssignableFrom( classMapType ) )
 			{
-				throw new InvalidOperationException( $"Argument {nameof( classMapType )} is not a CsvClassMap." );
+				//throw new InvalidOperationException( $"Argument {nameof( classMapType )} is not a CsvClassMap." );
+				throw new InvalidOperationException( string.Format("Argument {0} is not a CsvClassMap.",CSharp6Extension.nameof(() => classMapType )) );
 			}
 
 			var existingMap = ReferenceMaps.Find( member );
@@ -249,13 +250,14 @@ namespace CsvHelper.Configuration
 				// We need to go up the declaration tree and find the actual type the property
 				// exists on and use that PropertyInfo instead. This is so we can get the private
 				// set method for the property.
-				var properties = new List<PropertyInfo>();
+				//var properties = new List<PropertyInfo>();
 				foreach( var property in type.GetProperties( flags ) )
 				{
-					properties.Add( ReflectionHelper.GetDeclaringProperty( type, property, flags ) );
+					//properties.Add( ReflectionHelper.GetDeclaringProperty( type, property, flags ) );
+					members.Add( ReflectionHelper.GetDeclaringProperty( type, property, flags ) );
 				}
 
-				members.AddRange( properties );
+				//members.AddRange( properties);
 			}
 
 			if( ( configuration.MemberTypes & MemberTypes.Fields ) == MemberTypes.Fields )
@@ -282,9 +284,11 @@ namespace CsvHelper.Configuration
 					continue;
 				}
 
-				var memberTypeInfo = member.MemberType().GetTypeInfo();
+				//var memberTypeInfo = member.MemberType().GetTypeInfo();
+				var memberType = member.MemberType();
 				var isDefaultConverter = typeConverterType == typeof( DefaultTypeConverter );
-				if( isDefaultConverter && ( memberTypeInfo.HasParameterlessConstructor() || memberTypeInfo.IsUserDefinedStruct() ) )
+				//if( isDefaultConverter && ( memberTypeInfo.HasParameterlessConstructor() || memberTypeInfo.IsUserDefinedStruct() ) )
+				if( isDefaultConverter && ( memberType.HasParameterlessConstructor() || memberType.IsUserDefinedStruct() ) )
 				{
 					// If the type is not one covered by our type converters
 					// and it has a parameterless constructor, create a
@@ -329,7 +333,12 @@ namespace CsvHelper.Configuration
 					// Use the top of the map tree. This will maps that have been auto mapped
 					// to later on get a reference to a map by doing map.Map( m => m.A.B.C.Id )
 					// and it will return the correct parent map type of A instead of C.
-					var classType = mapParents.First?.Value ?? map.ClassType;
+					//var classType = mapParents.First?.Value ?? map.ClassType;
+					var classType = mapParents.FirstOrDefault(); 
+					if (classType == null)	
+					{
+						classType = map.ClassType;
+					}
 					var memberMap = MemberMap.CreateGeneric( classType, member );
 
 					// Use global values as the starting point.
@@ -364,9 +373,11 @@ namespace CsvHelper.Configuration
 
 				var parameterMap = new ParameterMap( parameter );
 
-				var memberTypeInfo = parameter.ParameterType.GetTypeInfo();
+				//var memberTypeInfo = parameter.ParameterType.GetTypeInfo();
+				var memberType= parameter.ParameterType;
 				var isDefaultConverter = typeConverterType == typeof( DefaultTypeConverter );
-				if( isDefaultConverter && ( memberTypeInfo.HasParameterlessConstructor() || memberTypeInfo.IsUserDefinedStruct() ) )
+				//if( isDefaultConverter && ( memberTypeInfo.HasParameterlessConstructor() || memberTypeInfo.IsUserDefinedStruct() ) )
+				if( isDefaultConverter && ( memberType.HasParameterlessConstructor() || memberType.IsUserDefinedStruct() ) )
 				{
 					// If the type is not one covered by our type converters
 					// and it has a parameterless constructor, create a
@@ -374,14 +385,16 @@ namespace CsvHelper.Configuration
 
 					if( configuration.IgnoreReferences )
 					{
-						throw new InvalidOperationException( $"Configuration '{nameof( configuration.IgnoreReferences )}' can't be true " +
+						//throw new InvalidOperationException( $"Configuration '{nameof( configuration.IgnoreReferences )}' can't be true " +
+						throw new InvalidOperationException( string.Format("Configuration '{0}' can't be true ", CSharp6Extension.nameof( () => configuration.IgnoreReferences )) +
 															  "when using types without a default constructor. Constructor parameters " +
 															  "are used and all members including references must be used." );
 					}
 
 					if( CheckForCircularReference( parameter.ParameterType, mapParents ) )
 					{
-						throw new InvalidOperationException( $"A circular reference was detected in constructor paramter '{parameter.Name}'." +
+						//throw new InvalidOperationException( $"A circular reference was detected in constructor paramter '{parameter.Name}'." +
+						throw new InvalidOperationException( string.Format("A circular reference was detected in constructor paramter '{0}'.", parameter.Name) +
 															  "Since all parameters must be supplied for a constructor, this parameter can't be skipped." );
 					}
 
@@ -394,7 +407,8 @@ namespace CsvHelper.Configuration
 					var referenceMap = new ParameterReferenceMap( parameter, refMap );
 					if( configuration.ReferenceHeaderPrefix != null )
 					{
-						referenceMap.Data.Prefix = configuration.ReferenceHeaderPrefix( memberTypeInfo.MemberType(), memberTypeInfo.Name );
+						//referenceMap.Data.Prefix = configuration.ReferenceHeaderPrefix( memberTypeInfo.MemberType(), memberTypeInfo.Name );
+						referenceMap.Data.Prefix = configuration.ReferenceHeaderPrefix( memberType, memberType.Name );
 					}
 
 					parameterMap.ReferenceMap = referenceMap;
@@ -459,7 +473,8 @@ namespace CsvHelper.Configuration
 		/// </summary>
 		protected virtual Type GetGenericType()
 		{
-			return GetType().GetTypeInfo().BaseType.GetGenericArguments()[0];
+			//return GetType().GetTypeInfo().BaseType.GetGenericArguments()[0];
+			return GetType().BaseType.GetGenericArguments()[0];
 		}
 
 		/// <summary>
@@ -470,80 +485,105 @@ namespace CsvHelper.Configuration
 		{
 			var member = memberMap.Data.Member;
 
-			if( member.GetCustomAttribute( typeof( IndexAttribute ) ) is IndexAttribute indexAttribute )
+			//if( member.GetCustomAttribute( typeof( IndexAttribute ) ) is IndexAttribute indexAttribute )
+			IndexAttribute indexAttribute = member.GetCustomAttributes(typeof( IndexAttribute ), false).FirstOrDefault() as IndexAttribute;
+			if( indexAttribute != null )
 			{
 				memberMap.Data.Index = indexAttribute.Index;
 				memberMap.Data.IndexEnd = indexAttribute.IndexEnd;
 				memberMap.Data.IsIndexSet = true;
 			}
 
-			if( member.GetCustomAttribute( typeof( NameAttribute ) ) is NameAttribute nameAttribute )
+			//if( member.GetCustomAttribute( typeof( NameAttribute ) ) is NameAttribute nameAttribute )
+			NameAttribute nameAttribute = member.GetCustomAttributes( typeof( NameAttribute ), false ).FirstOrDefault() as NameAttribute;
+			if( nameAttribute != null )
 			{
 				memberMap.Data.Names.Clear();
 				memberMap.Data.Names.AddRange( nameAttribute.Names );
 				memberMap.Data.IsNameSet = true;
 			}
 
-			if( member.GetCustomAttribute( typeof( NameIndexAttribute ) ) is NameIndexAttribute nameIndexAttribute )
+			//if( member.GetCustomAttribute( typeof( NameIndexAttribute ) ) is NameIndexAttribute nameIndexAttribute )
+			NameIndexAttribute nameIndexAttribute = member.GetCustomAttributes( typeof( NameIndexAttribute ), false ).FirstOrDefault() as NameIndexAttribute; 
+			if( nameIndexAttribute != null )
 			{
 				memberMap.Data.NameIndex = nameIndexAttribute.NameIndex;
 			}
 
-			if( member.GetCustomAttribute( typeof( IgnoreAttribute ) ) is IgnoreAttribute ignoreAttribute )
+			
+			//if( member.GetCustomAttribute( typeof( IgnoreAttribute ) ) is IgnoreAttribute ignoreAttribute )
+			IgnoreAttribute ignoreAttribute = member.GetCustomAttributes( typeof( IgnoreAttribute ), false ).FirstOrDefault() as IgnoreAttribute;
+			if( ignoreAttribute != null )
 			{
 				memberMap.Data.Ignore = true;
 			}
 
-			if( member.GetCustomAttribute( typeof( DefaultAttribute ) ) is DefaultAttribute defaultAttribute )
+			//if( member.GetCustomAttribute( typeof( DefaultAttribute ) ) is DefaultAttribute defaultAttribute )
+			DefaultAttribute defaultAttribute = member.GetCustomAttributes( typeof( DefaultAttribute ), false).FirstOrDefault() as DefaultAttribute;
+			if( defaultAttribute != null )
 			{
 				memberMap.Data.Default = defaultAttribute.Default;
 				memberMap.Data.IsDefaultSet = true;
 			}
 
-			if( member.GetCustomAttribute( typeof( ConstantAttribute ) ) is ConstantAttribute constantAttribute )
+			//if( member.GetCustomAttribute( typeof( ConstantAttribute ) ) is ConstantAttribute constantAttribute )
+			ConstantAttribute constantAttribute = member.GetCustomAttributes( typeof( ConstantAttribute ), false ).FirstOrDefault() as ConstantAttribute;
+			if( constantAttribute != null )
 			{
 				memberMap.Data.Constant = constantAttribute.Constant;
 				memberMap.Data.IsConstantSet = true;
 			}
 
-			if( member.GetCustomAttribute( typeof( TypeConverterAttribute ) ) is TypeConverterAttribute typeConverterAttribute )
+			//if( member.GetCustomAttribute( typeof( TypeConverterAttribute ) ) is TypeConverterAttribute typeConverterAttribute )
+			TypeConverterAttribute typeConverterAttribute = member.GetCustomAttributes( typeof( TypeConverterAttribute ), false ).FirstOrDefault() as TypeConverterAttribute;
+			if( typeConverterAttribute != null )
 			{
 				memberMap.Data.TypeConverter = typeConverterAttribute.TypeConverter;
 			}
 
-			if( member.GetCustomAttribute( typeof( CultureInfoAttribute ) ) is CultureInfoAttribute cultureInfoAttribute )
+			//if( member.GetCustomAttribute( typeof( CultureInfoAttribute ) ) is CultureInfoAttribute cultureInfoAttribute )
+			CultureInfoAttribute cultureInfoAttribute = member.GetCustomAttributes( typeof( CultureInfoAttribute ), false ).FirstOrDefault() as CultureInfoAttribute;
+			if( cultureInfoAttribute != null )
 			{
 				memberMap.Data.TypeConverterOptions.CultureInfo = cultureInfoAttribute.CultureInfo;
 			}
 
-			if( member.GetCustomAttribute( typeof( DateTimeStylesAttribute ) ) is DateTimeStylesAttribute dateTimeStylesAttribute )
+			//if( member.GetCustomAttribute( typeof( DateTimeStylesAttribute ) ) is DateTimeStylesAttribute dateTimeStylesAttribute )
+			DateTimeStylesAttribute dateTimeStylesAttribute = member.GetCustomAttributes( typeof( DateTimeStylesAttribute ), false ).FirstOrDefault() as DateTimeStylesAttribute;
+			if( dateTimeStylesAttribute != null )
 			{
 				memberMap.Data.TypeConverterOptions.DateTimeStyle = dateTimeStylesAttribute.DateTimeStyles;
 			}
 
-			if( member.GetCustomAttribute( typeof( NumberStylesAttribute ) ) is NumberStylesAttribute numberStylesAttribute )
+			//if( member.GetCustomAttribute( typeof( NumberStylesAttribute ) ) is NumberStylesAttribute numberStylesAttribute )
+			NumberStylesAttribute numberStylesAttribute = member.GetCustomAttributes( typeof( NumberStylesAttribute ), false ).FirstOrDefault() as NumberStylesAttribute;
+			if( numberStylesAttribute != null )
 			{
 				memberMap.Data.TypeConverterOptions.NumberStyle = numberStylesAttribute.NumberStyles;
 			}
 
-			if( member.GetCustomAttribute( typeof( FormatAttribute ) ) is FormatAttribute formatAttribute )
+			FormatAttribute formatAttribute = member.GetCustomAttributes( typeof( FormatAttribute ), false ).FirstOrDefault() as FormatAttribute;
+			if( formatAttribute != null )
 			{
 				memberMap.Data.TypeConverterOptions.Formats = formatAttribute.Formats;
 			}
 
-			if( member.GetCustomAttribute( typeof( BooleanTrueValuesAttribute ) ) is BooleanTrueValuesAttribute booleanTrueValuesAttribute )
+			BooleanTrueValuesAttribute booleanTrueValuesAttribute = member.GetCustomAttributes( typeof( BooleanTrueValuesAttribute ), false ).FirstOrDefault() as BooleanTrueValuesAttribute;
+			if( booleanTrueValuesAttribute != null )
 			{
 				memberMap.Data.TypeConverterOptions.BooleanTrueValues.Clear();
 				memberMap.Data.TypeConverterOptions.BooleanTrueValues.AddRange( booleanTrueValuesAttribute.TrueValues );
 			}
 
-			if( member.GetCustomAttribute( typeof( BooleanFalseValuesAttribute ) ) is BooleanFalseValuesAttribute booleanFalseValuesAttribute )
+			BooleanFalseValuesAttribute booleanFalseValuesAttribute = member.GetCustomAttributes( typeof( BooleanFalseValuesAttribute ), false ).FirstOrDefault() as BooleanFalseValuesAttribute;
+			if( booleanFalseValuesAttribute != null )
 			{
 				memberMap.Data.TypeConverterOptions.BooleanFalseValues.Clear();
 				memberMap.Data.TypeConverterOptions.BooleanFalseValues.AddRange( booleanFalseValuesAttribute.FalseValues );
 			}
 
-			if( member.GetCustomAttribute( typeof( NullValuesAttribute ) ) is NullValuesAttribute nullValuesAttribute )
+			NullValuesAttribute nullValuesAttribute = member.GetCustomAttributes( typeof( NullValuesAttribute ), false ).FirstOrDefault()  as NullValuesAttribute;
+			if( nullValuesAttribute != null )
 			{
 				memberMap.Data.TypeConverterOptions.NullValues.Clear();
 				memberMap.Data.TypeConverterOptions.NullValues.AddRange( nullValuesAttribute.NullValues );
@@ -558,7 +598,9 @@ namespace CsvHelper.Configuration
 		{
 			var member = referenceMap.Data.Member;
 
-			if( member.GetCustomAttribute( typeof( HeaderPrefixAttribute ) ) is HeaderPrefixAttribute headerPrefixAttribute )
+			//if( member.GetCustomAttribute( typeof( HeaderPrefixAttribute ) ) is HeaderPrefixAttribute headerPrefixAttribute )
+			HeaderPrefixAttribute headerPrefixAttribute = member.GetCustomAttributes( typeof( HeaderPrefixAttribute ), false ).FirstOrDefault() as HeaderPrefixAttribute;
+			if( headerPrefixAttribute != null )
 			{
 				referenceMap.Data.Prefix = headerPrefixAttribute.Prefix ?? member.Name + ".";
 			}

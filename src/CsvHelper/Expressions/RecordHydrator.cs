@@ -8,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
 namespace CsvHelper.Expressions
 {
@@ -55,7 +55,9 @@ namespace CsvHelper.Expressions
 		{
 			var recordType = typeof( T );
 
-			if( !reader.Context.HydrateRecordActions.TryGetValue( recordType, out Delegate action ) )
+			//if( !reader.Context.HydrateRecordActions.TryGetValue( recordType, out Delegate action ) )
+			Delegate action;
+			if( !reader.Context.HydrateRecordActions.TryGetValue( recordType, out action ) )
 			{
 				reader.Context.HydrateRecordActions[recordType] = action = CreateHydrateRecordAction<T>();
 			}
@@ -92,6 +94,7 @@ namespace CsvHelper.Expressions
 				var memberTypeParameter = Expression.Parameter( memberMap.Data.Member.MemberType(), "member" );
 				var memberAccess = Expression.MakeMemberAccess( recordTypeParameter, memberMap.Data.Member );
 				var memberAssignment = Expression.Assign( memberAccess, fieldExpression );
+
 				memberAssignments.Add( memberAssignment );
 			}
 

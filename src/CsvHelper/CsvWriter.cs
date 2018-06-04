@@ -15,7 +15,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Linq.Expressions;
 using System.Dynamic;
-using Microsoft.CSharp.RuntimeBinder;
+//using Microsoft.CSharp.RuntimeBinder;
 using System.Threading.Tasks;
 using CsvHelper.Expressions;
 
@@ -78,8 +78,13 @@ namespace CsvHelper
 		/// <param name="serializer">The serializer.</param>
 		public CsvWriter( ISerializer serializer )
 		{
-			this.serializer = serializer ?? throw new ArgumentNullException( nameof( serializer ) );
-			context = serializer.Context as WritingContext ?? throw new InvalidOperationException( $"For {nameof( ISerializer )} to be used in {nameof( CsvWriter )}, {nameof( ISerializer.Context )} must also implement {nameof( WritingContext )}." );
+			//this.serializer = serializer ?? throw new ArgumentNullException( nameof( serializer ) );
+			this.serializer = CSharp6Extension.GetArgumentOrThrowException<ISerializer>(serializer, nameof( serializer) );
+			//context = serializer.Context as WritingContext ?? throw new InvalidOperationException( $"For {nameof( ISerializer )} to be used in {nameof( CsvWriter )}, {nameof( ISerializer.Context )} must also implement {nameof( WritingContext )}." );
+			context = serializer.Context as WritingContext;
+			if(context == null){
+				throw new InvalidOperationException( $"For {nameof( ISerializer )} to be used in {nameof( CsvWriter )}, {nameof( ISerializer.Context )} must also implement {nameof( WritingContext )}." );
+			}
 			recordManager = ObjectResolver.Current.Resolve<RecordManager>( this );
 		}
 
@@ -192,7 +197,9 @@ namespace CsvHelper
 		{
 			var type = field == null ? typeof( string ) : field.GetType();
 			context.ReusableMemberMapData.TypeConverter = converter;
-			if( !context.TypeConverterOptionsCache.TryGetValue( type, out TypeConverterOptions typeConverterOptions ) )
+			//if( !context.TypeConverterOptionsCache.TryGetValue( type, out TypeConverterOptions typeConverterOptions ) )
+			TypeConverterOptions typeConverterOptions = CSharp6Extension.TryGetValue<Type, TypeConverterOptions>(context.TypeConverterOptionsCache, type);
+			if( typeConverterOptions == default(TypeConverterOptions) )
 			{
 				typeConverterOptions = TypeConverterOptions.Merge( new TypeConverterOptions { CultureInfo = context.WriterConfiguration.CultureInfo }, context.WriterConfiguration.TypeConverterOptionsCache.GetOptions( type ) );
 				context.TypeConverterOptionsCache.Add( type, typeConverterOptions );
@@ -231,6 +238,7 @@ namespace CsvHelper
 			context.Record.Clear();
 		}
 
+/* 
 		/// <summary>
 		/// Serializes the row to the <see cref="TextWriter"/>.
 		/// </summary>
@@ -239,7 +247,7 @@ namespace CsvHelper
 			await serializer.WriteAsync( context.Record.ToArray() );
 			context.Record.Clear();
 		}
-
+*/
 		/// <summary>
 		/// Ends writing of the current record and starts a new record.
 		/// This automatically flushes the writer.
@@ -260,6 +268,7 @@ namespace CsvHelper
 			}
 		}
 
+/* 
 		/// <summary>
 		/// Ends writing of the current record and starts a new record.
 		/// This automatically flushes the writer.
@@ -277,7 +286,7 @@ namespace CsvHelper
 				throw ex as CsvHelperException ?? new WriterException( context, "An unexpected error occurred.", ex );
 			}
 		}
-
+*/
 		/// <summary>
 		/// Writes a comment.
 		/// </summary>
@@ -390,7 +399,9 @@ namespace CsvHelper
 		/// <param name="record">The record to write.</param>
 		public virtual void WriteRecord<T>( T record )
 		{
-			if( record is IDynamicMetaObjectProvider dynamicRecord )
+			IDynamicMetaObjectProvider dynamicRecord = record as IDynamicMetaObjectProvider;
+			//if( record is IDynamicMetaObjectProvider dynamicRecord )
+			if( dynamicRecord != null )
 			{
 				if( context.WriterConfiguration.HasHeaderRecord && !context.HasHeaderBeenWritten )
 				{
@@ -423,8 +434,9 @@ namespace CsvHelper
 				foreach( var record in records )
 				{
 					var recordType = record.GetType();
-
-					if( record is IDynamicMetaObjectProvider dynamicObject )
+					IDynamicMetaObjectProvider dynamicObject = record as IDynamicMetaObjectProvider;
+					//if( record is IDynamicMetaObjectProvider dynamicObject )
+					if( dynamicObject != null )
 					{
 						if( context.WriterConfiguration.HasHeaderRecord && !context.HasHeaderBeenWritten )
 						{
@@ -493,8 +505,10 @@ namespace CsvHelper
 					{
 						recordType = record.GetType();
 					}
-
-					if( record is IDynamicMetaObjectProvider dynamicObject )
+					
+					IDynamicMetaObjectProvider dynamicObject = record as IDynamicMetaObjectProvider;
+					//if( record is IDynamicMetaObjectProvider dynamicObject )
+					if( dynamicObject != null )
 					{
 						if( context.WriterConfiguration.HasHeaderRecord && !context.HasHeaderBeenWritten )
 						{
@@ -506,7 +520,8 @@ namespace CsvHelper
 					{
 						// If records is a List<dynamic>, the header hasn't been written yet.
 						// Write the header based on the record type.
-						isPrimitive = recordType.GetTypeInfo().IsPrimitive;
+						isPrimitive = recordType.IsPrimitive;
+						//isPrimitive = recordType.GetTypeInfo().IsPrimitive;
 						if( context.WriterConfiguration.HasHeaderRecord && !context.HasHeaderBeenWritten && !isPrimitive )
 						{
 							WriteHeader( recordType );
@@ -544,7 +559,10 @@ namespace CsvHelper
 				// Ignored members.
 				memberMap.Data.Ignore;
 
-			if( memberMap.Data.Member is PropertyInfo property )
+			//if( memberMap.Data.Member is PropertyInfo property )
+
+			PropertyInfo property = memberMap.Data.Member as PropertyInfo;
+			if( property != null )
 			{
 				cantWrite = cantWrite ||
 				// Properties that don't have a public getter
@@ -581,7 +599,7 @@ namespace CsvHelper
 		/// <filterpriority>2</filterpriority>
 		public void Dispose()
 		{
-			Dispose( !context?.LeaveOpen ?? true );
+			Dispose( !context.LeaveOpen );
 			GC.SuppressFinalize( this );
 		}
 
@@ -600,7 +618,10 @@ namespace CsvHelper
 
 			if( disposing )
 			{
-				serializer?.Dispose();
+				//serializer?.Dispose();
+				if(serializer != null){
+					serializer.Dispose();
+				}
 			}
 
 			serializer = null;

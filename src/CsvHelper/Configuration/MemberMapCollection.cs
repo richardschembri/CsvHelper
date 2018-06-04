@@ -27,7 +27,10 @@ namespace CsvHelper.Configuration
 		/// <returns>
 		/// The number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
 		/// </returns>
-		public virtual int Count => list.Count;
+		//public virtual int Count => list.Count;
+		public virtual int Count{get{
+			return list.Count;
+		}} 
 
 		/// <summary>
 		/// Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
@@ -35,7 +38,12 @@ namespace CsvHelper.Configuration
 		/// <returns>
 		/// true if the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only; otherwise, false.
 		/// </returns>
-		public virtual bool IsReadOnly => false;
+		//public virtual bool IsReadOnly => false;
+		public virtual bool IsReadOnly{
+			get{
+				return false;
+			}
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MemberMapCollection"/> class.

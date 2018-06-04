@@ -7,7 +7,7 @@ using System.Collections;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using System.IO;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace CsvHelper
@@ -22,10 +22,12 @@ namespace CsvHelper
 		/// </summary>
 		void Flush();
 
-		/// <summary>
-		/// Serializes the row to the <see cref="TextWriter"/>.
-		/// </summary>
-		Task FlushAsync();
+		/* 
+			/// <summary>
+			/// Serializes the row to the <see cref="TextWriter"/>.
+			/// </summary>
+			Task FlushAsync();
+		*/
 
 		/// <summary>
 		/// Ends writing of the current record and starts a new record.
@@ -33,11 +35,13 @@ namespace CsvHelper
 		/// </summary>
 		void NextRecord();
 
-		/// <summary>
-		/// Ends writing of the current record and starts a new record.
-		/// This automatically flushes the writer.
-		/// </summary>
-		Task NextRecordAsync();
+		/* 
+			/// <summary>
+			/// Ends writing of the current record and starts a new record.
+			/// This automatically flushes the writer.
+			/// </summary>
+			Task NextRecordAsync();
+		*/
 
 		/// <summary>
 		/// Writes the list of records to the CSV file.

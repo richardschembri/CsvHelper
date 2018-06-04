@@ -63,7 +63,8 @@ namespace CsvHelper
 			var typeNames = new List<string>();
 			typeNames.Add( type.AssemblyQualifiedName );
 			typeNames.AddRange( args.Select( a => a.GetType().AssemblyQualifiedName ) );
-			var key = string.Join( "|", typeNames ).GetHashCode();
+			//var key = string.Join( "|", typeNames ).GetHashCode();
+			var key = string.Join( "|", typeNames.ToArray() ).GetHashCode();
 
 			Delegate func;
 			lock( locker )
@@ -123,7 +124,8 @@ namespace CsvHelper
 				return field;
 			}
 
-			throw new ConfigurationException( $"'{member.Name}' is not a member." );
+			//throw new ConfigurationException( $"'{member.Name}' is not a member." );
+			throw new ConfigurationException(string.Format( "'{0}' is not a member.", member.Name) );
 		}
 
 		/// <summary>
@@ -177,7 +179,8 @@ namespace CsvHelper
 		private static Delegate CreateInstanceDelegate( Type type, params object[] args )
 		{
 			Delegate compiled;
-			if( type.GetTypeInfo().IsValueType )
+			//if( type.GetTypeInfo().IsValueType )
+			if( type.IsValueType )
 			{
 				var method = typeof( ReflectionHelper ).GetMethod( "Default", BindingFlags.Static | BindingFlags.NonPublic );
 				method = method.MakeGenericMethod( type );

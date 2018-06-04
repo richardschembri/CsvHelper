@@ -71,7 +71,9 @@ namespace CsvHelper.Expressions
 
 			int typeKey = typeKeyName.GetHashCode();
 
-			if( !Writer.Context.TypeActions.TryGetValue( typeKey, out Delegate action ) )
+			Delegate action = CSharp6Extension.TryGetValue<int, Delegate>(Writer.Context.TypeActions, typeKey);
+			//if( !Writer.Context.TypeActions.TryGetValue( typeKey, out Delegate action ) )
+			if( action == default(Delegate) )
 			{
 				Writer.Context.TypeActions[typeKey] = action = CreateWriteDelegate( record );
 			}

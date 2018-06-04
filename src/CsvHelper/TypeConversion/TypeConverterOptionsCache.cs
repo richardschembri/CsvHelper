@@ -23,10 +23,16 @@ namespace CsvHelper.TypeConversion
 		{
 			if( type == null )
 			{
-				throw new ArgumentNullException( nameof( type ) );
+				//throw new ArgumentNullException( nameof( type ) );
+				throw new ArgumentNullException( CSharp6Extension.nameof(() => type));
 			}
 
-			typeConverterOptions[type] = options ?? throw new ArgumentNullException( nameof( options ) );
+			//typeConverterOptions[type] = options ?? throw new ArgumentNullException( nameof( options ) );
+			if(options != null){
+				typeConverterOptions[type] = options;
+			}else{
+				throw new ArgumentNullException( CSharp6Extension.nameof( () => options ) );
+			}
 		}
 
 		/// <summary>
@@ -47,7 +53,8 @@ namespace CsvHelper.TypeConversion
 		{
 			if( type == null )
 			{
-				throw new ArgumentNullException( nameof( type ) );
+				//throw new ArgumentNullException( nameof( type ) );
+				throw new ArgumentNullException( CSharp6Extension.nameof(() => type ) );
 			}
 
 			typeConverterOptions.Remove( type );

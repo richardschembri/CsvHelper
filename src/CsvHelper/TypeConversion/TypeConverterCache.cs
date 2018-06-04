@@ -99,7 +99,10 @@ namespace CsvHelper.TypeConversion
 				throw new ArgumentNullException( nameof( type ) );
 			}
 
-			if( typeConverters.TryGetValue( type, out ITypeConverter typeConverter ) )
+			ITypeConverter typeConverter = CSharp6Extension.TryGetValue<Type, ITypeConverter>(typeConverters, type);
+
+			//if( typeConverters.TryGetValue( type, out ITypeConverter typeConverter ) )
+			if(typeConverter != default(ITypeConverter))
 			{
 				return typeConverter;
 			}

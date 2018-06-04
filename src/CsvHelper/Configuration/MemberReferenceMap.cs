@@ -19,7 +19,8 @@ namespace CsvHelper.Configuration
 		/// <summary>
 		/// Gets the member reference map data.
 		/// </summary>
-		public MemberReferenceMapData Data => data;
+		//public MemberReferenceMapData Data => data;
+		public MemberReferenceMapData Data{get{return data;}}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MemberReferenceMap"/> class.
@@ -30,7 +31,8 @@ namespace CsvHelper.Configuration
 		{
 			if( mapping == null )
 			{
-				throw new ArgumentNullException( nameof( mapping ) );
+				//throw new ArgumentNullException( nameof( mapping ) );
+				throw new ArgumentNullException( CSharp6Extension.nameof(() => mapping ) );
 			}
 
 			data = new MemberReferenceMapData( member, mapping );

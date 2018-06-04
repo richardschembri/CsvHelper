@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
 namespace CsvHelper.Configuration
 {
@@ -48,7 +48,11 @@ namespace CsvHelper.Configuration
 
 		internal int GetMaxIndex()
 		{
-			return ReferenceMap?.GetMaxIndex() ?? Data.Index;
+			//return ReferenceMap?.GetMaxIndex() ?? Data.Index;
+			if (ReferenceMap != null){
+				return ReferenceMap.GetMaxIndex();
+			}
+			return Data.Index;
 		}
 	}
 }

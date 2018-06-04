@@ -57,7 +57,7 @@ namespace CsvHelper.Configuration
 		{
 			if( names == null || names.Length == 0 )
 			{
-				throw new ArgumentNullException( nameof( names ) );
+				throw new ArgumentNullException( CSharp6Extension.nameof(() => names ) );
 			}
 
 			Data.Names.Clear();
@@ -135,12 +135,14 @@ namespace CsvHelper.Configuration
 		{
 			if( defaultValue == null && Data.Member.MemberType().IsValueType )
 			{
-				throw new ArgumentException( $"Member of type '{Data.Member.MemberType().FullName}' can't have a default value of null." );
+				throw new ArgumentException(string.Format( "Member of type '{0}' can't have a default value of null.", Data.Member.MemberType().FullName));
+				//throw new ArgumentException( $"Member of type '{Data.Member.MemberType().FullName}' can't have a default value of null." );
 			}
 
 			if( defaultValue != null && defaultValue.GetType() != Data.Member.MemberType() )
 			{
-				throw new ArgumentException( $"Default of type '{defaultValue.GetType().FullName}' does not match member of type '{Data.Member.MemberType().FullName}'." );
+				throw new ArgumentException(string.Format( "Default of type '{0}' does not match member of type '{1}'.", defaultValue.GetType().FullName,  Data.Member.MemberType().FullName));
+				//throw new ArgumentException( $"Default of type '{defaultValue.GetType().FullName}' does not match member of type '{Data.Member.MemberType().FullName}'." );
 			}
 
 			Data.Default = defaultValue;
@@ -174,12 +176,14 @@ namespace CsvHelper.Configuration
 		{
 			if( constantValue == null && Data.Member.MemberType().IsValueType )
 			{
-				throw new ArgumentException( $"Member of type '{Data.Member.MemberType().FullName}' can't have a constant value of null." );
+				throw new ArgumentException(string.Format("Member of type '{0}' can't have a constant value of null.", Data.Member.MemberType().FullName));
+				//throw new ArgumentException( $"Member of type '{Data.Member.MemberType().FullName}' can't have a constant value of null." );
 			}
 
 			if( constantValue != null && constantValue.GetType() != Data.Member.MemberType() )
 			{
-				throw new ArgumentException( $"Constant of type '{constantValue.GetType().FullName}' does not match member of type '{Data.Member.MemberType().FullName}'." );
+				throw new ArgumentException( string.Format("Constant of type '{0}' does not match member of type '{1}'.", constantValue.GetType().FullName, Data.Member.MemberType().FullName));
+				//throw new ArgumentException( $"Constant of type '{constantValue.GetType().FullName}' does not match member of type '{Data.Member.MemberType().FullName}'." );
 			}
 
 			Data.Constant = constantValue;
