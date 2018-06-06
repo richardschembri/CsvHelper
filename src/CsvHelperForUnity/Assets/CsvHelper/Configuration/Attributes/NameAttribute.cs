@@ -57,7 +57,7 @@ namespace CsvHelper.Configuration.Attributes
 			if( names == null || names.Length == 0 )
 			{
 				//throw new ArgumentNullException( nameof( names ) );
-				throw new ArgumentNullException( CSharp6Extension.nameof( () => names ) );
+				throw new ArgumentNullException( nameof( names ) );
 			}
 
 			Names = names;

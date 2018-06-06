@@ -228,7 +228,6 @@ namespace CsvHelper
 			return context.Record != null;
 		}
 
-/* 
 		/// <summary>
 		/// Advances the reader to the next record. This will not read headers.
 		/// You need to call <see cref="ReadAsync"/> then <see cref="ReadHeader"/> 
@@ -260,7 +259,6 @@ namespace CsvHelper
 
 			return context.Record != null;
 		}
-*/
 
 		/// <summary>
 		/// Gets the raw field at position (column) index.

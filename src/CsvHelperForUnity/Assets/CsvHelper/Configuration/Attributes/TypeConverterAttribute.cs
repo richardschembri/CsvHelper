@@ -32,8 +32,8 @@ namespace CsvHelper.Configuration.Attributes
 		{
 			if( typeConverterType == null )
 			{
-				//throw new ArgumentNullException( nameof( typeConverterType ) );
-				throw new ArgumentNullException( CSharp6Extension.nameof( () => typeConverterType ) );
+				throw new ArgumentNullException( nameof( typeConverterType ) );
+				//throw new ArgumentNullException( CSharp6Extension.nameof( () => typeConverterType ) );
 			}
 
 			TypeConverter = ReflectionHelper.CreateInstance( typeConverterType ) as ITypeConverter;

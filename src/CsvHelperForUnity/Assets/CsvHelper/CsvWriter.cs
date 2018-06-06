@@ -238,7 +238,6 @@ namespace CsvHelper
 			context.Record.Clear();
 		}
 
-/* 
 		/// <summary>
 		/// Serializes the row to the <see cref="TextWriter"/>.
 		/// </summary>
@@ -247,7 +246,7 @@ namespace CsvHelper
 			await serializer.WriteAsync( context.Record.ToArray() );
 			context.Record.Clear();
 		}
-*/
+
 		/// <summary>
 		/// Ends writing of the current record and starts a new record.
 		/// This automatically flushes the writer.
@@ -268,7 +267,6 @@ namespace CsvHelper
 			}
 		}
 
-/* 
 		/// <summary>
 		/// Ends writing of the current record and starts a new record.
 		/// This automatically flushes the writer.
@@ -286,7 +284,7 @@ namespace CsvHelper
 				throw ex as CsvHelperException ?? new WriterException( context, "An unexpected error occurred.", ex );
 			}
 		}
-*/
+
 		/// <summary>
 		/// Writes a comment.
 		/// </summary>

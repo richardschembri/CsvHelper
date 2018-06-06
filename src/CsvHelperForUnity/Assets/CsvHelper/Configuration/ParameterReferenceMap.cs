@@ -33,8 +33,8 @@ namespace CsvHelper.Configuration
 		{
 			if( mapping == null )
 			{
-				//throw new ArgumentNullException( nameof( mapping ) );
-				throw new ArgumentNullException(CSharp6Extension.nameof(() => mapping ) );
+				throw new ArgumentNullException( nameof( mapping ) );
+				//throw new ArgumentNullException(CSharp6Extension.nameof(() => mapping ) );
 			}
 
 			data = new ParameterReferenceMapData( parameter, mapping );

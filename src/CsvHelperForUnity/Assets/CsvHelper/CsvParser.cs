@@ -104,7 +104,6 @@ namespace CsvHelper
 			}
 		}
 			
-		/* 
 		/// <summary>
 		/// Reads a record from the CSV file asynchronously.
 		/// </summary>
@@ -124,7 +123,6 @@ namespace CsvHelper
 				throw ex as CsvHelperException ?? new ParserException( context, "An unexpected error occurred.", ex );
 			}
 		}
-		*/
 
 		/// <summary>
 		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -222,7 +220,6 @@ namespace CsvHelper
 			return context.RecordBuilder.ToArray();
 		}
 			
-		/* 
 		/// <summary>
 		/// Reads a line of the CSV file.
 		/// </summary>
@@ -287,7 +284,6 @@ namespace CsvHelper
 
 			return context.RecordBuilder.ToArray();
 		}
-		*/
 
 		/// <summary>
 		/// Reads a blank line. This accounts for empty lines
@@ -324,7 +320,6 @@ namespace CsvHelper
 			}
 		}
 			
-		/* 
 		/// <summary>
 		/// Reads a blank line. This accounts for empty lines
 		/// and commented out lines.
@@ -359,7 +354,6 @@ namespace CsvHelper
 				c = fieldReader.GetChar();
 			}
 		}
-		*/
 
 		/// <summary>
 		/// Reads until a delimiter or line ending is found.
@@ -457,7 +451,6 @@ namespace CsvHelper
 			}
 		}
 			
-		/* 
 		/// <summary>
 		/// Reads until a delimiter or line ending is found.
 		/// </summary>
@@ -553,7 +546,6 @@ namespace CsvHelper
 				c = fieldReader.GetChar();
 			}
 		}
-		*/
 			
 		/// <summary>
 		/// Reads until the field is not quoted and a delimeter is found.
@@ -672,7 +664,6 @@ namespace CsvHelper
 			}
 		}
 			
-		/* 
 		/// <summary>
 		/// Reads until the field is not quoted and a delimeter is found.
 		/// </summary>
@@ -789,7 +780,6 @@ namespace CsvHelper
 				}
 			}
 		}
-		*/
 			
 		/// <summary>
 		/// Reads until the delimeter is done.
@@ -826,7 +816,6 @@ namespace CsvHelper
 			return true;
 		}
 			
-		/* 
 		/// <summary>
 		/// Reads until the delimeter is done.
 		/// </summary>
@@ -861,7 +850,6 @@ namespace CsvHelper
 
 			return true;
 		}
-		*/
 			
 		/// <summary>
 		/// Reads until the line ending is done.
@@ -889,7 +877,6 @@ namespace CsvHelper
 			return fieldStartOffset;
 		}
 			
-		/* 
 		/// <summary>
 		/// Reads until the line ending is done.
 		/// </summary>
@@ -915,7 +902,6 @@ namespace CsvHelper
 
 			return fieldStartOffset;
 		}
-		*/
 			
 		/// <summary>
 		/// Reads until a non-space character is found.
@@ -943,7 +929,6 @@ namespace CsvHelper
 			return true;
 		}
 		
-		/* 
 		/// <summary>
 		/// Reads until a non-space character is found.
 		/// </summary>
@@ -969,6 +954,5 @@ namespace CsvHelper
 
 			return true;
 		}
-		*/
 	}
 }

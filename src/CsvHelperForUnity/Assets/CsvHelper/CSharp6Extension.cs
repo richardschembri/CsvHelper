@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 
 public static class CSharp6Extension {
-
+/* 
     public static String nameof<T, TT>(this Expression<Func<T, TT>> accessor)
     {
         return nameof(accessor.Body);
@@ -32,7 +32,7 @@ public static class CSharp6Extension {
         }
         return null;
     }
-
+*/
     public static T GetArgumentOrThrowException<T>(T arg, string argName ){
         if (arg != null){
             return arg;

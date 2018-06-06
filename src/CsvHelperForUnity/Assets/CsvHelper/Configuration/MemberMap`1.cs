@@ -39,7 +39,7 @@ namespace CsvHelper.Configuration
 		{
 			if( names == null || names.Length == 0 )
 			{
-				throw new ArgumentNullException( CSharp6Extension.nameof(() => names ) );
+				throw new ArgumentNullException( nameof(names) );
 			}
 
 			Data.Names.Clear();

@@ -111,8 +111,8 @@ namespace CsvHelper.Configuration
 		{
 			if( !typeof( ClassMap ).IsAssignableFrom( classMapType ) )
 			{
-				//throw new InvalidOperationException( $"Argument {nameof( classMapType )} is not a CsvClassMap." );
-				throw new InvalidOperationException( string.Format("Argument {0} is not a CsvClassMap.",CSharp6Extension.nameof(() => classMapType )) );
+				throw new InvalidOperationException( $"Argument {nameof( classMapType )} is not a CsvClassMap." );
+				//throw new InvalidOperationException( string.Format("Argument {0} is not a CsvClassMap.",CSharp6Extension.nameof(() => classMapType )) );
 			}
 
 			var existingMap = ReferenceMaps.Find( member );
@@ -386,7 +386,7 @@ namespace CsvHelper.Configuration
 					if( configuration.IgnoreReferences )
 					{
 						//throw new InvalidOperationException( $"Configuration '{nameof( configuration.IgnoreReferences )}' can't be true " +
-						throw new InvalidOperationException( string.Format("Configuration '{0}' can't be true ", CSharp6Extension.nameof( () => configuration.IgnoreReferences )) +
+						throw new InvalidOperationException( string.Format("Configuration '{0}' can't be true ", nameof( configuration.IgnoreReferences )) +
 															  "when using types without a default constructor. Constructor parameters " +
 															  "are used and all members including references must be used." );
 					}

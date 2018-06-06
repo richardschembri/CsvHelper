@@ -69,7 +69,7 @@ namespace CsvHelper
 		{
 			if( type == null )
 			{
-				throw new ArgumentNullException( CSharp6Extension.nameof( () => type ) );
+				throw new ArgumentNullException( nameof( type ) );
 			}
 
 			// https://stackoverflow.com/a/2483054/68499

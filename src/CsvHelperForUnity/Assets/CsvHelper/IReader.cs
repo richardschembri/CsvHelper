@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using CsvHelper.Configuration;
-//using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace CsvHelper
 {
@@ -34,15 +34,13 @@ namespace CsvHelper
 		/// <returns>True if there are more records, otherwise false.</returns>
 		bool Read();
 
-		/* 
-			/// <summary>
-			/// Advances the reader to the next record. This will not read headers.
-			/// You need to call <see cref="ReadAsync"/> then <see cref="ReadHeader"/> 
-			/// for the headers to be read.
-			/// </summary>
-			/// <returns>True if there are more records, otherwise false.</returns>
-			Task<bool> ReadAsync();
-		*/
+		/// <summary>
+		/// Advances the reader to the next record. This will not read headers.
+		/// You need to call <see cref="ReadAsync"/> then <see cref="ReadHeader"/> 
+		/// for the headers to be read.
+		/// </summary>
+		/// <returns>True if there are more records, otherwise false.</returns>
+		Task<bool> ReadAsync();
 
 		/// <summary>
 		/// Gets all the records in the CSV file and

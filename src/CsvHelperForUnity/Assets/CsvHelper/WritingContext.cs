@@ -104,11 +104,11 @@ namespace CsvHelper
 		{
 			//this.writer = writer ?? throw new ArgumentNullException( nameof( writer ) );
 			if(this.writer == null){
-				throw new ArgumentNullException(CSharp6Extension.nameof( () => writer));
+				throw new ArgumentNullException(nameof(writer));
 			}
 			//this.configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
 			if(this.configuration == null){
-				throw new ArgumentNullException( CSharp6Extension.nameof(() =>  configuration ) );
+				throw new ArgumentNullException( nameof( configuration ) );
 			}
 			LeaveOpen = leaveOpen;
 		}

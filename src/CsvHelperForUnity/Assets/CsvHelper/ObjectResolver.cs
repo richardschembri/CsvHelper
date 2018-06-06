@@ -83,13 +83,13 @@ namespace CsvHelper
 			if(canResolve != null){
 				CanResolve = canResolve;
 			}else{
-				throw new ArgumentNullException(CSharp6Extension.nameof( () => canResolve ) );
+				throw new ArgumentNullException(nameof( canResolve ) );
 			}
 			//ResolveFunction = resolveFunction ?? throw new ArgumentNullException( nameof( resolveFunction ) );
 			if(resolveFunction != null){
 				ResolveFunction = resolveFunction;
 			}else{
-				throw new ArgumentNullException(CSharp6Extension.nameof( () => resolveFunction ) );
+				throw new ArgumentNullException(nameof( resolveFunction ) );
 			}
 			UseFallback = useFallback;
 		}
